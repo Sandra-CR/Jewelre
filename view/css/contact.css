@@ -1,0 +1,87 @@
+#btnRetour {
+    position: absolute;
+    z-index: 1;
+    left: 12px;
+    top: 12px;
+    border: none;
+    background: none;
+    color: #AE9576;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+#btnRetour:hover {
+    color:#caaf8d;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+}
+
+.contact {
+    padding: 11vh 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* titres */
+.contact h5 {
+    color: #8a755b;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.contact h4 {
+    font-size: 2.6rem;
+    margin-bottom: 8vh;
+    color: #AE9576;
+}
+
+/* formulaire */
+.form-container {
+    background-color: #fff;
+    width: 600px;
+    padding: 40px 40px 25px;
+    border: 1px solid #AE9576;
+    border-radius: 15px;
+}
+.form-grp {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 3%;
+}
+.form-grp label {
+    width: 15%;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: end;
+    margin-top: 7px;
+    color: #AE9576;
+}
+.form-grp input,
+.form-grp textarea {
+    width: 82%;
+    background-color: #efefef;
+    border: none;
+    padding: 8px 10px;
+    color: #8a755b;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    margin-bottom: 19px;
+    resize: none;
+}
+.btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+
+}
+.form-container button {
+    padding: 14px 2.5vw;
+    background-color: #AE9576;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    color: #fff;
+}

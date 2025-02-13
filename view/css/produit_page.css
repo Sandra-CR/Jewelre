@@ -1,0 +1,583 @@
+html { scroll-behavior: smooth; }
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ----- GENERAL -------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+.produit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3.5vh 0;
+    padding-left: 11vw;
+}
+#btnRetour {
+    position: absolute;
+    z-index: 1;
+    left: 12px;
+    bottom: 80%;
+    border: none;
+    background: none;
+    color: #AE9576;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+#btnRetour:hover {
+    color:#caaf8d;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+}
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ----- SLIDER PRODUIT ------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+.slider {
+    position: relative;
+    width: 30vw;
+    margin: auto;
+    box-shadow: 0 5px 80px #8b73651f;
+    background-color: #fff;
+}
+.slider img {
+    width: 100%;
+    height: 30vw;
+    display: none;
+    object-fit: cover;
+}
+
+img.displaySlide {
+    display: block;
+}
+
+/* -- BOUTONS --------------------------------- */
+.slider button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #AE9576;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.slider button:hover {
+    background-color: #fff;
+    color: #AE9576;
+    border-color: #AE9576;
+    transition: all 0.2s ease;
+}
+.prev {
+    left: -80px;
+}
+.next {
+    right: -80px;
+}
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ----- PARTIE DE DROITE PRODUIT --------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+.infos-produit {
+    background-color: #fff;
+    margin: 0 3.5vh;
+    padding: 5vh;
+    display: flex;
+    flex-direction: column;
+    width: 39.5vw;
+    height: 69vh;
+}
+
+/* -- partie haute ---------------------------- */
+.haut-desc {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 2vw;
+    margin-bottom: 2vh;
+}
+h1 {
+    font-size: 1.4rem;
+    text-transform: capitalize;
+    color: #8a755b;
+    width: 25vw;
+}
+h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #AE9576;
+    padding: 0.5vh 0.7vw;
+    text-align: center;
+    border-radius: 15px;
+}
+
+/* -- Avis ------------------------------------ */
+.avis {
+    display: flex;
+    margin: 2vh 0 1vh;
+}
+.avis i {
+    color: #AE9576;
+    margin: 0 1px;
+}
+.avis p {
+    margin: 0 2vh;
+    color: #8a755b;
+}
+.avis a {
+    text-decoration-line: underline;
+    color: #8a755b;
+}
+
+/* -- Vendeur --------------------------------- */
+.vendeur h4 {
+    font-size: 0.9rem;
+    color: #8a755b;
+    margin-bottom: 2vh;
+}
+.vendeur h4 span {
+    color: #AE9576;
+    font-weight: 600;
+}
+
+/* -- tailles --------------------------------- */
+.taille-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   
+    gap: 1vw;
+    margin: 5vh 0;
+}
+.taille {
+    background-color: #fff;
+    color: #AE9576;
+    border: 1.5px solid #AE9576;
+    border-radius: 4px;
+    text-align: center;
+    padding: 1vh 1vw;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.taille.active {
+    background-color: #AE9576;
+    color: #fff;
+    font-weight: 700;
+}
+
+/* -- Stock ----------------------------------- */
+.stock-text {
+    width: 100%;
+    text-align: center;
+    margin-top: 10vh;
+}
+.stock-text p {
+    color: #8a755b;
+}
+#stock {
+    color: #558c37;
+    font-weight: 500;
+}
+#stockLim {
+    color: #b46321;
+    font-weight: 500;
+}
+#ruptureStock {
+    color: #ba1f1f;
+    font-weight: 500;
+}
+
+/* -- Bouton panier ---------------------------- */
+#achat-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.panier-ajout {
+    display: flex;
+    justify-content: center;
+    align-content: flex-end;
+    margin: 2vh 0;
+}
+.btn-panier {
+    background-color: #d4d3d3;
+    color: #fff;
+    border: 2px solid transparent;
+    border-radius: 5px 0 0 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 12px 50px;
+    transition: all 0.3s ease;
+}
+.btn-panier.on {
+    background-color: #AE9576;
+    color: #fff;
+
+}
+.btn-panier.on:hover {
+    background-color: #fff;
+    border-color: #AE9576;
+    color: #AE9576;
+    transition: all 0.3s ease;
+}
+.btn-suppr {
+    border: 3px solid #ba1f1f;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 12px 50px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    color: #ba1f1f;
+}
+.btn-suppr:hover {
+    background-color: #ba1f1f;
+    border-color: #ba1f1f;
+    color: #fff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#ajouterAuxFavoris:hover {
+    background-color: #fff;
+    border-color: #AE9576;
+    color: #AE9576;
+    transition: all 0.3s ease;
+}
+
+#ajouterAuxFavoris {
+    padding: 9.5px;
+    border-radius: 0 5px 5px 0;
+    background-color: #fff;
+    color: #AE9576;
+    border: 2px solid #AE9576;
+    cursor: pointer;
+}
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ----- DESCRIPTION COMPLETE DU PROPDUIT ------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+.produit-desc {
+    width: 94%;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-around;
+    padding: 4% 3%;
+}
+
+/* -- Description group ----------------------- */
+.desc-group {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.desc-group h2 {
+    color: #AE9576;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin-bottom: 4vh;
+    font-weight: 600;
+}
+
+/* -- Donnees group --------------------------- */
+.donnee-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1vh;
+}
+.donnee-group h5 {
+    color: #8a755b;
+    font-size: 0.85rem;
+}
+.donnee-group p {
+    text-transform: capitalize;
+    color: #AE9576;
+    font-weight: 500;
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ----- SPE VENDEUR ---------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+
+.taille.add {
+    cursor: pointer;
+}
+.taille.add i {
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.popup {
+    display: none; 
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+  
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 8px #0000004d;
+}
+.popup-content h2 {
+    color: #AE9576;
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin: 15px 0 25px;
+}
+.input-group-popup {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.input-group-popup label {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.input-group-popup input[type~="number"] {
+    padding: 2px 5px;
+    text-align: center;
+    color: #8a755b;
+    width: 60%;
+    border: 1px solid #111;
+    border-radius: 3px;
+}
+  
+.close {
+    color: #fff;
+    font-size: 35px;
+    position: absolute;
+    text-align: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    top: 10px;
+    right: 20px;
+    transition: all 0.2s ease;
+
+}
+.close:hover,
+.close:focus {
+    transform: scale(1.1);
+    z-index: 1; 
+    transition: all 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popup-content button {
+    padding: 5px 15px;
+    color: #fff;
+    background-color: #AE9576;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    font-size: 1rem;
+    float: right;
+    margin: 20px 0;
+    
+}
+  
+
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-item img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+.image-item {
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+
+}
+.image-item:hover {
+    transform: scale(1.15);
+    z-index: 1; 
+    transition: all 0.5s ease;
+}
+
+.btn-suppr-img {
+    position: absolute;
+    top: 5px; 
+    right: 5px; 
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+.btn-suppr-img:hover {
+    color: #ba1f1f;
+    border-color: #ba1f1f;
+    background-color: #ffffffa0;
+    transition: all 0.3s ease;
+}
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ----- AVIS DU PRODUIT (CLIENT) --------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+
+.avis-container {
+    width: 97%;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    margin-top: 20px;
+    padding-bottom: 30px;
+}
+.avis-container h2 {
+    text-align: center;
+    padding: 30px;
+    color: #AE9576;
+    font-size: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.avis-container .grid {
+    width: 93%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 20px 30px;
+}
+.avis-container .grid > div:nth-child(odd):last-child {
+    grid-column: span 2;
+    justify-self: center;
+  }
+
+.avis-item {
+    border: 1px solid #AE9576;
+    padding: 15px;
+    border-radius: 35px 5px 5px;
+    min-width: 40vw;
+}
+
+.avis-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+}
+.avis-info .left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 19px;
+    color: #8a755b;
+}
+.avis-info .right {
+    font-size: 13px;
+    color: #8e8d8d;
+}
+.avis-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+}
+
+.avis-content .titre {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 5px 0 12px;
+    font-size: 20px;
+    color: #AE9576;
+}
+.titre h5 {  font-weight: 500; }
+
+.avis-content p {
+    color: #8a755b;
+}
+
+
+.avis-item.add form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ----- ARTICLE INTROUVABLE -------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+
+.article-introuvable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 86vh;
+}
+.bulle {
+    background-color: #fff;
+    width: 330px;
+    height: 330px;
+    margin: 20% 0;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5vh;
+}
+.article-introuvable i {
+    color: #AE9576;
+    margin-bottom: 3vh;
+}
+.article-introuvable p {
+    color: #AE9576;
+    background-color: #fff; 
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+.article-introuvable a {
+    color: #AE9576;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}

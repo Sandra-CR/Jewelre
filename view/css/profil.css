@@ -1,0 +1,417 @@
+/* ----------------------------------------- */
+/* ------------ PARTIE GENERALE -------------------------------------------------------------------- */
+/* ----------------------------------------- */
+
+.profile-contenu {
+    margin: 35px auto;
+    width: 950px;
+    background-color: #fff;
+    padding: 35px 55px;
+} 
+.profile-contenu .profil-form {
+    display: flex;
+    justify-content: start;
+    gap: 80px;
+}
+#btnRetour {
+    position: absolute;
+    z-index: 1;
+    left: 10px;
+    bottom: 80%;
+    border: none;
+    background: none;
+    color: #AE9576;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+#btnRetour:hover {
+    color:#caaf8d;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+}
+#erreur {
+    color: #8d1313;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+#succes {
+    color: #345c1f;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+#message {
+    background-color: #fff;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #756249;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    color: #756249;
+    margin-top: 5px;
+}
+#message i {
+    margin: 0 8px;
+}
+
+/* -------------------------------------------------- */
+/* ------------ PARTIE GAUCHE DU PROFILE ------------------------------------------------------------------ */
+/* -------------------------------------------------- */
+
+.left-profile {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.left-profile img {
+    width: 300px;
+    border-radius: 50%;
+}
+
+.image-profile {
+    position : relative ;
+	z-index : 1;
+}
+
+.custom-file-input {
+    display: none;
+}
+.custom-file-label {
+    position : absolute;
+    z-index : 2;
+	bottom: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #AE9576;
+    cursor: pointer;
+}
+
+
+/* -------------------------------------------------- */
+/* ------------ PARTIE DROITE DU PROFILE ------------ */
+/* -------------------------------------------------- */
+
+.right-profile {
+    width: 65%;
+}
+
+.titre-group {
+    display: flex;
+    justify-content: space-between;
+}
+.right-profile h2 {
+    color: #AE9576;
+    font-size: 1.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+.titre-group h4 {
+    padding: 4px 6px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    color: #AE9576;
+    border: 2px solid #AE9576;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.info-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    border-bottom: 1px solid #AE9576;
+    padding: 2px;
+}
+
+.right-profile label {
+    color: #AE9576;
+    font-weight: 400;
+}
+.right-profile input::placeholder {
+    color: #bbbbbb;
+    font-style: italic;
+    font-size: 0.95rem;
+    font-weight: 300;
+}
+.right-profile input[type="text"],
+.right-profile input[type="email"],
+.right-profile input[type="password"] {
+    border: none;
+    font-size: 1rem;
+    color: #756249;
+    font-weight: 500;
+    text-align: end;
+    width: 64%;
+}
+.right-profile input:focus {
+    outline: none;
+}
+
+.afficher-mdp {
+    display: flex;
+    justify-content: end;
+    gap: 7px;
+}
+.afficher-mdp p {
+    color: #756249;
+    font-size: 0.85rem;
+}
+
+.btn-update {
+    display: flex;
+}
+.btn-update button {
+    padding: 6px 12px;
+    background-color: #AE9576;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* -------------------------------------------------- */
+/* ------------- PARTIE ADRESSE CLIENT -------------------------------------------------------------- */
+/* -------------------------------------------------- */
+
+.titre {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 25px;
+}
+.titre h2 {
+    color: #AE9576;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+}
+#nb {
+    padding: 5px 12px;
+    height: min-content;
+    color: #AE9576;
+    border: 2px solid #AE9576;
+    border-radius: 30px 30px;
+    font-weight: 700;
+}
+
+.adresse-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #AE9576;
+    color: #AE9576;
+    font-size: 1rem;
+    margin-bottom: 3px;
+}
+
+.text-adresse, .buttons-adresse { display: flex; }
+
+.text-adresse {
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+}
+#uppercase { text-transform: uppercase; }
+
+.text-adresse #numberAdresse {
+    width: 50px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #AE9576;
+    color: #fff;
+    font-size: 1.3rem;
+}
+.buttons-adresse { justify-content: right; }
+
+#modifAdresse,
+#supprAdresse {
+    height: 100%;
+    width: 50px;
+    background-color: transparent;
+    border: none;
+    border-left: 1px solid #AE9576;
+    font-size: 1.3rem;
+    color: #AE9576;
+    cursor: pointer;
+}
+#modifAdresse:hover { color: #8d6613; }
+#supprAdresse:hover { color: #8d1313; }
+
+#adresseAdd {
+    width: 100%;
+    height: 50px;
+    margin-top: 15px;
+    border: 1px solid #AE9576;
+    color: #AE9576;
+    background-color: transparent;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+
+.popup {
+    display: none; 
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+  
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 4px 8px #0000004d;
+}
+.form-content-adresse {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.popup-content h2 {
+    color: #AE9576;
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin: 15px 0 25px;
+}
+.input-group-popup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 7px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.input-group-popup label {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.input-group-popup input[type~="number"],
+.input-group-popup input[type~="text"] {
+    padding: 2px 5px;
+    text-align: center;
+    color: #8a755b;
+    border: 1px solid #111;
+    border-radius: 3px;
+}
+.input-group-popup input[type~="number"] { width: 50px; }
+  
+.close {
+    color: #fff;
+    font-size: 35px;
+    position: absolute;
+    text-align: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    top: 10px;
+    right: 20px;
+    transition: all 0.2s ease;
+
+}
+.close:hover,
+.close:focus {
+    transform: scale(1.1);
+    z-index: 1; 
+    transition: all 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#ajouterAdresseP,
+#modifAdresseP {
+    padding: 5px 15px;
+    color: #fff;
+    background-color: #AE9576;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    font-size: 1rem;
+    float: right;
+    margin: 20px auto;
+    
+}
+
+
+/* -------------------------------------------------- */
+/* ------------- PARTIE COMMANDES CLIENT -------------------------------------------------------------- */
+/* -------------------------------------------------- */
+
+.commande-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 12px;
+    border: 1px solid #AE9576;
+    margin: 20px 0 7px;
+}
+.commande-title h3 {
+    color: #AE9576;
+    font-weight: 600;
+}
+.commande-title p {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #AE9576;
+}
+
+.produit-commande {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 4px 20px;
+}
+
+.produit-group {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 7px;
+}
+.produit-group img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+.produit-group h4 {
+    color: #756249;
+}
+#prixProduit {
+    font-size: 0.8rem;
+    color: #756249;
+}

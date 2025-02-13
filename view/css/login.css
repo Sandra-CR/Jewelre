@@ -1,0 +1,234 @@
+/* -------------------- GENERAL -------------------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#erreur,
+#succes {
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 0 15px 7px;
+}
+#erreur { color: #8d1313; }
+#succes { color: #345c1f; }
+
+
+/* -------------------- CONTAINER -------------------- */
+.container {
+    background-color: #fff;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    width: 35vw;
+    max-width: 100%;
+    min-height: 85vh;
+}
+
+
+
+/* --------------------- TITRE --------------------- */
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin: 9vh 0 5vh;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #AE9576;
+}
+h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 9vh 20px 7vh;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #AE9576;
+}
+
+
+/* ----------------- USER SELECTION ---------------- */
+.selection-user {
+    display: flex;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 3.5vh;
+}
+
+.user.actif,
+.user.autre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user.actif a,
+.user.autre a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin-bottom: 3px;
+    font-weight: 700;
+}
+
+.user.actif a {
+    color: #AE9576;
+}
+.user.actif .separateur {
+    background-color: #AE9576;
+}
+
+.user.autre a {
+    color: #CECECE;
+}
+.user.autre .separateur {
+    background-color: #CECECE;
+}
+
+.separateur {
+    width: 9vw;
+    height: 0.5vh;
+    background-color: #AE9576;
+}
+
+
+/* ------------------- FORMULAIRE ------------------- */
+.form-content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.5vh;
+}
+.input-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3vh;
+}
+.input-group p {
+    display: flex;
+    height: 5.5vh;
+    width: 5.5vh;
+    background-color: #F5F5F5;
+    border-radius: 10px 0 0 10px;
+    justify-content: center;
+    align-items: center;
+    color: #9b8366;
+}
+.input-group input {
+    border: none;
+    background-color: #E7E7E7;
+    width: 25vw;
+    height: 5.5vh;
+    padding-left: 1vw;
+    border-radius: 0 10px 10px 0 ;
+}
+.input-group input::placeholder {
+    color: #C9C7C4;
+}
+.input-group input:focus {
+    outline: none;
+}
+
+.afficher-mdp {
+    display: flex;
+    margin-left: 5vw;
+    margin-bottom: 3vh;
+}
+.afficher-mdp input {
+    accent-color: #AE9576;
+    margin: 0 0.5vw;
+    cursor: pointer;
+}
+.afficher-mdp p {
+    font-size: 0.9rem;
+    color: #7c7a76;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.9rem;
+}
+.links a {
+    color: #ae9576a9;
+    margin-bottom: 0.5vh;
+}
+.links a:hover {
+    color: #AE9576;
+    transition: all 0.3s ease;
+}
+
+input[type~="submit"],
+button {
+    display: block;
+    margin: 7vh auto;
+    padding: 1.9vh 1.7vw;
+    font-size: 1.1rem;
+    font-weight: 600;   
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background-color: #AE9576;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-submit input:hover {
+    color: #AE9576;
+    background-color: #fff;
+    border-color: #AE9576;
+    transition: all 0.3s ease;
+}
+
+span {
+    color: #8d1313;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ----- ARTICLE INTROUVABLE -------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+
+.aucun-article {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 86vh;
+}
+.bulle {
+    background-color: #fff;
+    width: 330px;
+    height: 330px;
+    margin: 20% 0;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5vh;
+}
+.aucun-article i {
+    color: #AE9576;
+    margin-bottom: 3vh;
+}
+.aucun-article p {
+    color: #AE9576;
+    background-color: #fff; 
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+.aucun-article button {
+    color: #AE9576;
+    background-color: transparent;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}

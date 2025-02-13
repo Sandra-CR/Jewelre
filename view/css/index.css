@@ -1,0 +1,127 @@
+/* -------------------- CAROUSEL -------------------- */
+
+/* ---------- SLIDER ---------- */
+.slider {
+    position: relative;
+    width: 66vw;
+    margin: auto;
+    box-shadow: 0 5px 80px #8b73651f;
+    margin-bottom: 6vh;
+    margin-top: 3.5vh;
+}
+.slider img {
+    width: 100%;
+    display: none;
+}
+
+/* ---------- IMAGE AFFICHEE ---------- */
+img.displaySlide {
+    display: block;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+/* ---------- BOUTONS ---------- */
+.slider button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border: none;
+    color: #AE9576;
+    cursor: pointer;
+}
+.prev {
+    left: -80px;
+}
+.next {
+    right: -80px;
+}
+
+/* ---------- ANIMATION ---------- */
+@keyframes fade {
+    from {opacity: .55}
+    to {opacity: 1}
+}
+
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1400px) {
+    .slider {
+        width: 800px;
+    }
+}
+@media (max-width: 1000px) {
+    .slider {
+        width: 700px;
+    }
+    .slider button {
+        padding: 0;
+    }
+}
+
+
+/* -------------------- CHOICE PANEL -------------------- */
+
+/* ---------- GENERAL ---------- */
+.choice-panel {
+    width: 100%;
+    background-color: #fff;
+    padding: 9vh 0 12vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* ---------- TOP-PANEL ---------- */
+.choice-panel .top-panel {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 65px;
+}
+.choice-panel h2 {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #AE9576;
+    margin-bottom: 2vh;
+    font-size: 1.3rem;
+}
+.choice-panel .line {
+    width: 5%;
+    height: 0.3vh;
+    background-color: #AE9576;
+}
+
+/* ---------- IMAGES ---------- */
+.image-panel {
+    padding-left: 3vw;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+.image-panel img {
+    width: 13vw;
+    transition: all 0.3s ease;
+}
+.image-panel img:hover {
+    opacity: .75;
+    transition: all 0.5s ease;
+}
+figure {
+    width: 13vw;
+}
+
+@media (min-width: 1400px) {
+    .choice-panel h2 {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* --------------------------------------------------------------------- */
+/* ---------- COLLECTION FLORALE CHIC DISABLED POUR LE MOMENT ---------- */
+/* --------------------------------------------------------------------- */
+.grid {
+    display: none;
+}

@@ -1,0 +1,177 @@
+
+nav,
+nav .bottom-nav {
+    margin-bottom: 0;
+}
+
+
+.page {
+    display: flex;
+}
+
+.categorie,
+.categorie .btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.categorie {
+    width: 12vw;
+    background-color: #fff;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+.categorie-btn {
+    padding: 3vh 0;
+    width: 12vw;
+    text-align: center;
+    text-decoration: none;
+    color: #AE9576;
+    background-color: #fff;
+    font-weight: 400;
+    border: 1px solid #DEC19E;
+}
+.categorie-btn.active {
+    background-color: #AE9576;
+    color: #fff;
+    font-weight: 600;
+}
+.categorie p {
+    display: flex;
+    font-size: 0.8rem;
+    color: #AE9576;
+}
+
+.champs {
+    display: flex;
+    margin: 3vh;
+}
+h3 {
+    text-align: center;
+    text-transform: uppercase;
+    color: #AE9576;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 1vh 0 3vh;
+}
+.input-group {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin: 2vh 0;
+}
+.input-group.file {
+    display: flex;
+    align-items: center;
+    margin-top: 5vh;
+}
+label {
+    font-size: 0.9rem;
+    color: #9e8567;
+}
+input[type~="text"],
+input[type~="number"],
+select {
+    border: none;
+    width: 58%;
+    height: 4vh;
+    padding: 0 1%;
+    margin-left: 0.7vw;
+    color: #756249;
+}
+select {
+    width: 60%;
+}
+input[type~="file"] {
+    color: #AE9576;
+    margin-left: 0.7vw;
+}
+input[type=file]::file-selector-button {
+    margin-right: 8px;
+    border: 1px solid #AE9576;
+    background: #fff;
+    padding: 4px 8px;
+    color: #AE9576;
+    cursor: pointer;
+}
+input:focus {
+    outline: none;
+}
+
+.caracteristiques {
+    width: 30vw;
+}
+
+.pierres {
+    width: 26vw;
+}
+
+/* Pour le js */
+/* .pierre {
+    display: none;
+}
+.check.secondaire {
+    display: none;
+} */
+/* ---------- */
+
+.check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3vh;
+}
+.check input {
+    color: #AE9576;
+}
+.check p {
+    margin-left: 5px;
+    color: #AE9576;
+    font-size: 0.8rem;
+}
+
+.tailles-stock {
+    width: 26vw;
+}
+#info {
+    color: #756249;
+    font-size: 0.85rem;
+    margin: 2vw 0 2vw 2vw;
+    text-align: justify;
+}
+.conditions {
+    display: flex;
+    flex-direction: column;
+    margin: 5vh 0 3vh 4vw;
+    color: #756249;
+    font-size: 0.8rem;
+}
+span {
+    margin-top: 1vw;
+    color: #8d1313;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: center;
+}
+span.succes {
+    color: #345c1f;
+}
+.condi {
+    margin-top: 2vh;
+    display: flex;
+}
+.condi input {
+    margin-right: 6px;
+}
+.btn-submit {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+    
+}
+.btn-submit input {
+    color: #fff;
+    background-color: #AE9576;
+    border: 1px solid transparent;
+    padding: 1.5vh 1.5vw;
+}
