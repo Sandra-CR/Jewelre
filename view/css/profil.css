@@ -244,7 +244,6 @@
 }
 .buttons-adresse { justify-content: right; }
 
-#modifAdresse,
 #supprAdresse {
     height: 100%;
     width: 50px;
@@ -255,10 +254,10 @@
     color: #AE9576;
     cursor: pointer;
 }
-#modifAdresse:hover { color: #8d6613; }
+
 #supprAdresse:hover { color: #8d1313; }
 
-#adresseAdd {
+#ajouterAdresseToggle {
     width: 100%;
     height: 50px;
     margin-top: 15px;
@@ -379,9 +378,28 @@
     border: 1px solid #AE9576;
     margin: 20px 0 7px;
 }
+.commande-title .group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .commande-title h3 {
     color: #AE9576;
     font-weight: 600;
+}
+.commande-title button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.commande-title i {
+    font-size: 25px;
+    color: #8a755b;
+    transition: 0.2s;
+}
+.commande-title button:hover i {
+    color: #AE9576;
+    transition: 0.2s;
 }
 .commande-title p {
     font-weight: 700;

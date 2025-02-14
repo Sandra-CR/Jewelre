@@ -131,6 +131,7 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
             $stmt->bindParam(':pseudo', $_SESSION['pseudo']);
             $stmt->execute();
             $client = $stmt->fetch(PDO::FETCH_ASSOC);
+            $clientId = $client['id'];
 
             $query = "UPDATE client SET pseudo = :pseudo" . 
             ($newNom ? ", nom = :nom" : "") . 
@@ -163,6 +164,29 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
         echo "Erreur : " . $e->getMessage();
         exit();
     }
+
+
+    // if(isset($_POST['ajout-adresse'])) {
+        if (isset($_POST['ajout-adresse']) && !empty($_POST['pays']) && !empty($_POST['ville']) && !empty($_POST['rue']) && !empty($_POST['numero'])) {
+            try {
+                $stmt = $conn->prepare("INSERT INTO adresse (pays, ville, rue, numero, active, id_client) VALUES (:pays, :ville, :rue, :numero, :active, :id_client)");
+                $stmt->bindParam(':pays', $_POST['pays']);
+                $stmt->bindParam(':ville', $_POST['ville']);
+                $stmt->bindParam(':rue', $_POST['rue']);
+                $stmt->bindParam(':numero', $_POST['numero']);
+                $stmt->bindParam(':numero', 0);
+                $stmt->bindParam(':id_client', $clientId);
+                $stmt->execute();
+        
+                header("Location: profil.php");
+                exit();
+            } catch (PDOException $e) {
+                die("Erreur SQL : " . $e->getMessage());
+            }
+        } else {
+            echo "Tous les champs doivent être remplis!";
+        }
+    // }
 }
 ?>
 
@@ -345,7 +369,7 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
     </div>
 
     <?php if(!empty($_SESSION['pseudo'])) { ?>
-        <div class="profile-contenu" id="adresseSection">
+        <div class="profile-contenu" id="adresse">
             <?php 
             $stmt = $conn->prepare("SELECT * FROM adresse WHERE id_client = :id_client AND active IS NOT NULL ORDER BY active DESC");
             $stmt->bindParam(':id_client', $client['id']);
@@ -368,11 +392,11 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
                         <div class="buttons-adresse">
                             <form method="POST">
                                 <input type="hidden" value="<?php echo $adresse['id']; ?>" name="thisAdresse">
-                                <button type="submit" name="modifAdresseToggle" id="modifAdresse"><i class='bx bxs-pencil'></i></button>
+                                <!-- Mettre une adresse en actif -->
                             </form>
                             <form method="POST">
                                 <input type="hidden" value="<?php echo $adresse['id']; ?>" name="thisAdresseSuppr">
-                                <button type="submit" name="supprAdresse" id="supprAdresse"><i class='bx bxs-trash-alt'></i></button>
+                                <button type="button" name="supprAdresse" id="supprAdresse"><i class='bx bxs-trash-alt'></i></button>
                             </form>
                         </div>
                     </div> 
@@ -382,51 +406,34 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
             
             if(count($adresses) < 3) { ?>
                 <form method="POST">
-                    <button type="submit" id="adresseAdd" name="ajouterAdresseToggle"><i class='bx bx-plus'></i> Ajouter une adresse</button>
+                    <button type="button" id="ajouterAdresseToggle" name="ajouterAdresseToggle"><i class='bx bx-plus'></i> Ajouter une adresse</button>
                 </form>
             <?php } ?>
 
             <div id="popupForm" class="popup">
                 <div class="popup-content">
                     <span id="closePopup" class="close">&times;</span>
-                    <?php if(isset($_POST['ajouterAdresseToggle'])) { ?>
-                        <h2>Ajouter une adresse</h2>
-                    <?php } else if(isset($_POST['modifAdresseToggle'])) { 
-                        if(isset($_POST['thisAdresse']) && !empty($_POST['thisAdresse'])) {
-                            $idAdresse = $_POST['thisAdresse'];
-                            $stmt = $conn->prepare("SELECT * FROM adresse WHERE id = :id");
-                            $stmt->bindParam(':id', $idAdresse);
-                            $stmt->execute();
-                            $thisAdresse = $stmt->fetch(PDO::FETCH_ASSOC);
-                        }
-                        ?>
-                        <h2>Modifier l'adresse</h2>
-                    <?php } ?>
-                    <form method="post">
+                    <h2>Ajouter une adresse</h2>
+                    <form method="post" action="">
                         <div class="form-content-adresse">
                             <div class="input-group-popup">
                                 <label for="numero">N°</label>
-                                <input name="numero" type="number" step="1" min="1" value="<?php echo isset($thisAdresse['numero']) ? $thisAdresse['numero'] : ''; ?>">
+                                <input name="numero" type="number" step="1" min="1">
                             </div>
                             <div class="input-group-popup">
                                 <label for="rue">Rue</label>
-                                <input name="rue" type="text" value="<?php echo isset($thisAdresse['rue']) ? $thisAdresse['rue'] : ''; ?>">
+                                <input name="rue" type="text">
                             </div>
                             <div class="input-group-popup">
                                 <label for="ville">Ville</label>
-                                <input name="ville" type="text" value="<?php echo isset($thisAdresse['ville']) ? $thisAdresse['ville'] : ''; ?>">
+                                <input name="ville" type="text">
                             </div>
                             <div class="input-group-popup">
                                 <label for="pays">Pays</label>
-                                <input name="pays" type="text" value="<?php echo isset($thisAdresse['pays']) ? $thisAdresse['pays'] : ''; ?>">
+                                <input name="pays" type="text">
                             </div>
                         </div>
-
-                        <?php if(isset($_POST['ajouterAdresseToggle'])) { ?>
-                            <button id="ajouterAdresseP" class="modif-adresse" name="modifAdresse">Ajouter</button>
-                        <?php } else if(isset($_POST['modifAdresseToggle'])) { ?>
-                            <button id="modifAdresseP" class="modif-adresse" name="modifAdresse">Appliquer</button>
-                        <?php } ?>
+                        <button id="ajoutAdresse" class="ajout-adresse" name="ajout-adresse" type="submit">Ajouter</button>
                     </form>
                 </div>
             </div>
@@ -454,8 +461,14 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
 
                     <div class="commande-item">
                         <div class="commande-title">
-                            <h3>Commande N°<?php echo $commande['id']; ?></h3>
-                            <p id="prixTotal"><?php echo $commande['prix_total'] . "€"; ?></p>
+                            <form action="../../model/facture.php" method="POST">
+                                <div class="group">
+                                    <input type="hidden" name="idCommande" value="<?php echo $commande['id']; ?>">
+                                    <button type="submit" class="pdf"><i class='bx bxs-file-pdf'></i></button>
+                                    <h3>Commande N°<?php echo $commande['id']; ?></h3>
+                                </div>
+                            </form>
+                                <p id="prixTotal"><?php echo $commande['prix_total'] . "€"; ?></p>
                         </div>
 
                         <?php 
@@ -475,7 +488,7 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
                             $stmt->bindParam(':id', $contenu['id_produit']);
                             $stmt->execute();
                             $produit = $stmt->fetch(PDO::FETCH_ASSOC);
-                            $pierresInfo = $produit['pierres_info'];  
+                            $pierresInfo = $produit['pierres_info'];
                             $calculPrixTotal += $produit['prix']; 
                             ?>
 
@@ -528,15 +541,10 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
 
     <script>
         const popup = document.getElementById("popupForm");
-        const openButtonAdd = document.getElementById("adresseAdd");
-        const openButtonModif = document.getElementById("modifAdresse");
+        const openButtonAdd = document.getElementById("ajouterAdresseToggle");
         const closeButton = document.getElementById("closePopup");
 
         openButtonAdd.addEventListener("click", () => {
-            event.preventDefault();
-            popup.style.display = "flex";
-        });
-        openButtonModif.addEventListener("click", () => {
             event.preventDefault();
             popup.style.display = "flex";
         });
@@ -546,11 +554,23 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
         });
 
         window.addEventListener("click", (event) => {
-        if (event.target === popup) {
-            popup.style.display = "none";
-        }
+            if (event.target === popup) {
+                popup.style.display = "none";
+            }
         });
 
+        document.querySelectorAll('.close').forEach(button => {
+            button.addEventListener("click", (event) => {
+                const popup = document.getElementById(`popupForm`);
+                popup.style.display = "none";
+            });
+        });
+
+        window.addEventListener("click", (event) => {
+            if (event.target.classList.contains('popup')) {
+                event.target.style.display = "none";
+            }
+        });
     </script>
 </body>
 </html>
