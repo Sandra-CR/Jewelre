@@ -7,7 +7,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    gap: 30px;
     height: 100vh;
 }
 
@@ -133,6 +133,10 @@ h2 {
     outline: none;
 }
 
+.input-group.mdp {
+    position: relative;
+}
+
 .afficher-mdp {
     display: flex;
     margin-left: 5vw;
@@ -190,6 +194,46 @@ span {
     font-size: 0.8rem;
     display: flex;
     justify-content: center;
+}
+
+
+/* -------------------- CONDITIONS DE MOT DE PASSE -------------------- */
+.password-check {
+    position: absolute;
+    bottom: 54%;
+    width: 330px;
+    background-color: #fff;
+    border: 1px solid #AE9576;
+    border-radius: 5px;
+}
+.password-check::before {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #AE9576;
+    z-index: 2;
+}
+
+.password-check h3 {
+    text-align: center;
+    margin: 20px auto 15px;
+    color: #AE9576;
+    font-size: 19px;
+    font-weight: 600;
+}
+.password-check .item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    margin: 7px 10px;
+    color: #8d1313;
+}
+.password-check .item:nth-child(4) {
+    margin-bottom: 10px;
+}
+.active {
+    color: #345c1f !important;
 }
 
 

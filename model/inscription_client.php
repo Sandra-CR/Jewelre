@@ -30,22 +30,26 @@
                 if ($stmt->rowCount() > 0) {
                     echo "<p><span>Cette adresse mail est déjà utilisée</span></p>";
                 } else {
-                    if($mdp === $mdpC) {
-                        // Hacher le mot de passe
-                        $mdp_hash = password_hash($mdp, PASSWORD_DEFAULT);
-
-                        // Préparation de la requête SQL
-                        $stmt = $conn->prepare("INSERT INTO client (pseudo, email, mdp) VALUES
-                        (:pseudo, :email, :mdp)");
-                        $stmt->bindParam(':pseudo', $pseudo);
-                        $stmt->bindParam(':email', $email);
-                        $stmt->bindParam(':mdp', $mdp_hash);
-                        $stmt->execute();
-                        // Redirection vers la page connexion.php
-                        header("Location: login_client.php");
-                        exit(); // Assure que le script s'arrête ici pour éviter toute exécution supplémentaire
+                    if(strlen($mdp) < 8 || !preg_match("/[A-Z]/", $mdp) || !preg_match("/[^A-Za-z0-9]/", $password)) {
+                        echo "<p><span>Les conditions de mot de passe n'ont pas été respectées</span></p>";
                     } else {
-                        echo "<p><span>Veillez à ce que les deux mots de passe soient identiques</span></p>";
+                        if($mdp === $mdpC) {
+                            // Hacher le mot de passe
+                            $mdp_hash = password_hash($mdp, PASSWORD_DEFAULT);
+
+                            // Préparation de la requête SQL
+                            $stmt = $conn->prepare("INSERT INTO client (pseudo, email, mdp) VALUES
+                            (:pseudo, :email, :mdp)");
+                            $stmt->bindParam(':pseudo', $pseudo);
+                            $stmt->bindParam(':email', $email);
+                            $stmt->bindParam(':mdp', $mdp_hash);
+                            $stmt->execute();
+                            // Redirection vers la page connexion.php
+                            header("Location: login_client.php");
+                            exit(); // Assure que le script s'arrête ici pour éviter toute exécution supplémentaire
+                        } else {
+                            echo "<p><span>Veillez à ce que les deux mots de passe soient identiques</span></p>";
+                        }
                     }
                 }
             }

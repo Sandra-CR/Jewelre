@@ -63,6 +63,24 @@
             </form>
         </div>
     </div>
+
+    <!-------------- CONDITIONS DE MOT DE PASSE -------------->
+    <div class="password-check">
+        <h3>Le mot de passe doit...</h2>
+        <div class="item char">
+            <!-- <i class='bx bxs-check-circle'></i> Pour le rendre OK -->
+            <p class="check char"><i class='bx bxs-x-circle'></i></p>
+            <p>Contenir au moins 8 caractères</p>
+        </div>
+        <div class="item maj">
+            <p class="check maj"><i class='bx bxs-x-circle'></i></p>
+            <p>Contenir au moins 1 majuscule</p>
+        </div>
+        <div class="item spe">
+            <p class="check spe"><i class='bx bxs-x-circle'></i></p>
+            <p>Contenir au moins 1 caractère spécial</p>
+        </div>
+    </div>
     
     
     <!------------ SCRIPT AFFICHER LE MDP ------------>
@@ -70,7 +88,17 @@
         let input = document.querySelector('.input-group.mdp input');
         let confi = document.querySelector('.input-group.cfm input');
         let checkbox = document.querySelector('.afficher-mdp input');
-        checkbox.onclick =function(){
+
+        const passwordCheck = document.querySelector('.password-check');
+        const char = document.querySelector(".char");
+        const checkChar = document.querySelector('.check.char');
+        const maj = document.querySelector(".maj");
+        const checkMaj = document.querySelector('.check.maj');
+        const spe = document.querySelector(".spe");
+        const checkSpe = document.querySelector('.check.spe');
+
+
+        checkbox.onclick = function() {
             if(input.type === "password") {
                 input.type = "text";
                 confi.type = "text";
@@ -78,7 +106,45 @@
                 input.type = "password";
                 confi.type = "password";
             }
-        } 
+        };
+
+        passwordCheck.style.display = 'none';
+        input.addEventListener('focus', () => {
+            passwordCheck.style.display = 'block';
+        });
+        input.addEventListener('blur', () => {
+                passwordCheck.style.display = 'none';
+        });
+
+        input.addEventListener('input', () => {
+            const pass = input.value;
+
+            if(pass.length >= 8) {
+                char.classList.add('active');
+                checkChar.innerHTML = '<i class=\'bx bxs-check-circle\'></i>';
+            } else {
+                char.classList.remove('active');
+                checkChar.innerHTML = '<i class=\'bx bxs-x-circle\'></i>';
+            }
+
+            if(/[A-Z]/.test(pass)) {
+                maj.classList.add('active');
+                checkMaj.innerHTML = '<i class=\'bx bxs-check-circle\'></i>';
+            } else {
+                maj.classList.remove('active');
+                checkMaj.innerHTML = '<i class=\'bx bxs-x-circle\'></i>';
+            }
+
+            if(/[^A-Za-z0-9]/.test(pass)) {
+                spe.classList.add('active');
+                checkSpe.innerHTML = '<i class=\'bx bxs-check-circle\'></i>';
+            } else {
+                spe.classList.remove('active');
+                checkSpe.innerHTML = '<i class=\'bx bxs-x-circle\'></i>';
+            }
+        });
+
+
     </script>
 </body>
 </html>
