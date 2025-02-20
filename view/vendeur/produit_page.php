@@ -1,5 +1,9 @@
 <?php 
 session_start(); 
+if (!isset($_SESSION['entreprise'])) {
+    header("Location: login_vendeur.php");
+    exit();
+}
 
 // Connexion
 include ('../../model/bdd.php');

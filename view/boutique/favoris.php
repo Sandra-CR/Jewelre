@@ -1,8 +1,8 @@
 <?php
 session_start();
-
-if(!isset($_SESSION['pseudo'])) {
-    die('L\'utilisateur n\'est pas connecté');
+if (!isset($_SESSION['pseudo'])) {
+    header("Location: login_client.php");
+    exit();
 }
 
 $clientId = $_SESSION['id'];

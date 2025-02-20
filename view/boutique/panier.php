@@ -1,5 +1,10 @@
 <?php 
 session_start(); 
+if (!isset($_SESSION['pseudo'])) {
+    header("Location: login_client.php");
+    exit();
+}
+
 include ('../../model/bdd.php');
 
 $idClient = $_SESSION['id'];
