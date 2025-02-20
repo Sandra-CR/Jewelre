@@ -23,7 +23,7 @@ function plusSlides(n) {
 
 function currentSlide(n) {
     clearInterval(intervalId);
-    slideIndex = n - 1;
+    slideIndex = n;
     updateSlides();
 }
 
