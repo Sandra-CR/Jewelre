@@ -107,7 +107,6 @@ if(isset($_SESSION['pseudo'])) {
                 echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_earrings=on\">BOUCLES D'OREILLES</a></li>";
                 echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_bracelet=on\">BRACELETS</a></li>";
                 echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_collier=on\">COLLIERS</a></li>";
-                echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_montre=on\">MONTRES</a></li>";
                 echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_collection=on\">COLLECTIONS</a></li>";
             }
             

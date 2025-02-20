@@ -27,7 +27,6 @@ if (!isset($_SESSION['entreprise'])) {
                 <a href="add_earrings.php" class="categorie-btn active">Boucles d'oreilles</a>
                 <a href="add_bracelet.php" class="categorie-btn">Bracelets</a>
                 <a href="add_collier.php" class="categorie-btn">Colliers</a>
-                <a href="#" class="categorie-btn">Montres</a>
                 <a href="#" class="categorie-btn">Collection</a>
             </div>
             <p>*Champs obligatoires</p>

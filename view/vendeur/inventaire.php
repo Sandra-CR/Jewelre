@@ -44,9 +44,6 @@ try {
     if(isset($_GET['filtre_collier'])) {
         $filtreConditions[] = "p.type_produit = 'Collier'";
     }
-    if(isset($_GET['filtre_montre'])) {
-        $filtreConditions[] = "p.type_produit = 'Montre'";
-    }
     if(isset($_GET['filtre_collection'])) {
         $filtreConditions[] = "p.type_produit = 'Collection'";
     }
@@ -130,10 +127,6 @@ try {
                     <div class="filtre-group">
                         <input type="checkbox" name="filtre_collier" <?php echo isset($_GET['filtre_collier']) ? 'checked' : ''; ?>>
                         <label for="filtre_collier">Collier</label>
-                    </div>
-                    <div class="filtre-group">
-                        <input type="checkbox" name="filtre_montre" <?php echo isset($_GET['filtre_montre']) ? 'checked' : ''; ?>>
-                        <label for="filtre_montre">Montre</label>
                     </div>
                     <div class="filtre-group">
                         <input type="checkbox" name="filtre_collection" <?php echo isset($_GET['filtre_collection']) ? 'checked' : ''; ?>>

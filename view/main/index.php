@@ -31,22 +31,24 @@
         </div>
         <div class="image-panel">
             <figure>
+                <h4>Bagues</h4>
                 <a href="../boutique/catalogue.php?filtre_bague=on"><img src="../img/choice/bague.png" alt="image bague"></a>
             </figure>    
             <figure>
+                <h4>Boucles d'oreilles</h4>
                 <a href="../boutique/catalogue.php?filtre_earrings=on"><img src="../img/choice/boucles.png" alt="image boucles d'oreille"></a>
             </figure>
             <figure>
+                <h4>Bracelets</h4>
                 <a href="../boutique/catalogue.php?filtre_bracelet=on"><img src="../img/choice/bracelet.png" alt="image bracelet"></a>
             </figure>
             <figure>
+                <h4>Colliers</h4>
                 <a href="../boutique/catalogue.php?filtre_collier=on"><img src="../img/choice/collier.png" alt="image collier"></a>
-            </figure>   
+            </figure>     
             <figure>
-                <a href="../boutique/catalogue.php?filtre_montre=on"><img src="../img/choice/montre.png" alt="image montre"></a>
-            </figure>    
-            <figure>
-                <a href="../boutique/catalogue.php?filtre_collection=on"><img src="../img/choice/collection.png" alt="image montre"></a>
+                <h4>Collections</h4>
+                <a href="../boutique/catalogue.php?filtre_collection=on"><img src="../img/choice/collection.png" alt="image collection"></a>
             </figure> 
         </div>
     </div>

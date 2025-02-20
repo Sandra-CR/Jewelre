@@ -98,18 +98,53 @@ img.displaySlide {
 .image-panel {
     padding-left: 3vw;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
 }
 .image-panel img {
-    width: 13vw;
+    width: 16vw;
+    height: 100%;
     transition: all 0.3s ease;
 }
 .image-panel img:hover {
     opacity: .75;
     transition: all 0.5s ease;
 }
+.image-panel figure:hover::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: #111;
+    opacity: 0.3;
+}
 figure {
-    width: 13vw;
+    position: relative;
+    width: 16vw;
+    transition: all 0.2s ease;
+}
+figure:hover {
+    transition: all 0.3s ease;
+}
+figure:nth-child(odd):hover { transform: scale(1.1) rotate(-1.5deg); }
+figure:nth-child(even):hover { transform: scale(1.1) rotate(1.5deg); }
+figure h4 {
+    display: none;
+    width: 100%;
+    font-size: 21px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    z-index: 3;
+}
+figure:hover h4 {
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
 }
 
 @media (min-width: 1400px) {
