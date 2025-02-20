@@ -16,11 +16,16 @@
     <!------------------------ CAROUSEL ------------------------>
     <div class="slider">
         <div class="slides">
+            <!-- <a href=""><img class="slide" src="../img/carousel/slider2.png" alt="img1"></a> -->
             <a href=""><img class="slide" src="../img/carousel/slider1.png" alt="img1"></a>
             <a href=""><img class="slide" src="../img/carousel/slider2.png" alt="img2"></a>
         </div>
-        <button class="prev" onclick="prevSlide()"><i class='bx bx-chevron-left bx-lg'></i></button>
-        <button class="next" onclick="nextSlide()"><i class='bx bx-chevron-right bx-lg'></i></button>
+        <button class="prev" onclick="plusSlides(-1)"><i class='bx bx-chevron-left bx-lg'></i></button>
+        <button class="next" onclick="plusSlides(1)"><i class='bx bx-chevron-right bx-lg'></i></button>
+        <div style="text-align:center" class="dots">
+            <span class="dot" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+        </div>
     </div>
 
     <!------------------------ PANNEAU CHOIX ------------------------>

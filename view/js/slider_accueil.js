@@ -1,48 +1,49 @@
-/* -------------------- CAROUSEL INDEX.PHP -------------------- */
-
-/* ---------- VARIABLES ---------- */
-const slides = document.querySelectorAll(".slides img");
+let slides = document.querySelectorAll(".slide");
 let slideIndex = 0;
 let intervalId = null;
 
-
-/* ---------- DOM > AFFICHAGE ---------- */
 document.addEventListener("DOMContentLoaded", initializeSlider);
 
-
-/* -------------------- LES FONCTIONS -------------------- */
-function initializeSlider(){
-    if(slides.length > 0){
+function initializeSlider() {
+    if (slides.length > 0) {
         slides[slideIndex].classList.add("displaySlide");
         intervalId = setInterval(nextSlide, 6500);
+        updateDots();
+        updateTransform();
     }
 }
 
-/* ---------- AFFICHER ---------- */
-function showSlide(index){
-
-    if(index >= slides.length){
-        slideIndex = 0;
-    }
-    else if(index < 0) {
-        slideIndex = slides.length - 1;
-    }
-
-    slides.forEach(slide => {
-        slide.classList.remove("displaySlide");
-    });
-    slides[slideIndex].classList.add("displaySlide");
-}
-
-/* ---------- BOUTON < ---------- */
-function prevSlide(){
+function plusSlides(n) {
     clearInterval(intervalId);
-    slideIndex--;
-    showSlide(slideIndex);
+    slideIndex += n;
+    if (slideIndex >= slides.length) slideIndex = 0;
+    if (slideIndex < 0) slideIndex = slides.length - 1;
+    updateSlides();
 }
 
-/* ---------- BOUTON > ---------- */
-function nextSlide(){
-    slideIndex++;
-    showSlide(slideIndex);
+function currentSlide(n) {
+    clearInterval(intervalId);
+    slideIndex = n - 1;
+    updateSlides();
+}
+
+function nextSlide() {
+    slideIndex = (slideIndex + 1) % slides.length;
+    updateSlides();
+}
+
+function updateSlides() {
+    updateDots();
+    updateTransform();
+}
+
+function updateDots() {
+    let dots = document.querySelectorAll(".dot");
+    dots.forEach(dot => dot.classList.remove("active"));
+    if (dots[slideIndex]) dots[slideIndex].classList.add("active");
+}
+
+function updateTransform() {
+    let slideWidth = document.querySelector(".slider").clientWidth;
+    document.querySelector(".slides").style.transform = `translateX(${-slideIndex * slideWidth}px)`;
 }
