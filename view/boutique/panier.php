@@ -63,7 +63,7 @@ if(isset($_POST['finaliserPanier'])) {
                 $totalCommande += $produit['prix']; 
             }
         }
-
+ 
         $stmt = $conn->prepare("INSERT INTO commande (date_commande, prix_total, id_adresse, id_client) VALUES (NOW(), :prix_total, :id_adresse, :id_client)");
         $stmt->bindParam(':prix_total', $totalCommande);
         $stmt->bindParam(':id_adresse', $adresse['id']);
@@ -74,11 +74,21 @@ if(isset($_POST['finaliserPanier'])) {
 
         foreach($_SESSION['panier'] as $item) {
             list($id_produit, $id_taille) = explode("-", $item);
+            $sql = "SELECT p.type_produit, p.motif, p.matiere_p, p.couleur_p, p.matiere_s, p.couleur_s, 
+              GROUP_CONCAT(CONCAT(ps.matiere, ' ', ps.couleur) ORDER BY ps.id ASC SEPARATOR ' et ') AS pierres_info  
+              FROM produit p LEFT JOIN produit_suplement ps ON ps.id_produit = p.id WHERE p.id = :id_produit GROUP BY p.id;";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':id_produit', $id_produit);
+            $stmt->execute();
+            $titre = $stmt->fetch(PDO::FETCH_ASSOC);
+            $pierresInfo = $titre['pierres_info'];
 
-            $stmt = $conn->prepare("INSERT INTO commande_contenu (id_commande, id_produit, id_taille) VALUES (:id_commande, :id_produit, :id_taille)");
+            $nomProduit = $titre['type_produit'] ." ". (!empty($titre['motif']) ? $titre['motif'] ." " : '') . $titre['matiere_p'] ." ". $titre['couleur_p'] . (!empty($pierresInfo) ? " ". $pierresInfo : '');
+            $stmt = $conn->prepare("INSERT INTO commande_contenu (id_commande, id_produit, nom_produit, prix_achat) VALUES (:id_commande, :id_produit, :nom_produit, :prix_achat)");
             $stmt->bindParam(':id_commande', $id_commande);
             $stmt->bindParam(':id_produit', $id_produit);
-            $stmt->bindParam(':id_taille', $id_taille);
+            $stmt->bindParam(':nom_produit', $nomProduit);
+            $stmt->bindParam(':prix_achat', $produit['prix']);
             $stmt->execute();
         }
 

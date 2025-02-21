@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->rowCount() > 0) {
                 echo "<p><span>Cette adresse mail est déjà utilisée</span></p>";      
             } else {
-                if(strlen($mdp) < 8 || !preg_match("/[A-Z]/", $mdp) || !preg_match("/[^A-Za-z0-9]/", $password)) {
+                if(strlen($mdp) < 8 || !preg_match("/[A-Z]/", $mdp) || !preg_match("/[^A-Za-z0-9]/", $mdp)) {
                     echo "<p><span>Les conditions de mot de passe n'ont pas été respectées</span></p>";
                 } else {
                     if($mdp != $mdpC) {

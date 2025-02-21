@@ -35,9 +35,14 @@ $client = $stmt->fetch(PDO::FETCH_ASSOC);
 Class PDF extends TFPDF {
     // Pied de page
     function Footer() {
+        $width = $this->GetPageWidth();
+
         $this->setY(-15);
+        $this->SetFillColor(174, 149, 118);
+        $this->Cell($width - 20, 0.3, '', 0, 1, 'C', true);
         $this->SetFont('DejaVu', 'I', 10);
-        $this->Cell(0, 10, 'Jewelr-e', 0, 0, 'C');
+        $this->SetTextColor(138, 117, 91);
+        $this->Cell(0, 10, 'Jewelr-e | Plateforme en ligne d\'achat/vente de bijoux', 0, 0, 'C');
     }
 
     // Haut de table
@@ -163,21 +168,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     foreach($produits as $produit) {
         $idProduit = $produit['id_produit'];
         
-        $stmt = $conn->prepare("SELECT p.id, p.type_produit, p.motif, p.matiere_p, p.couleur_p, p.prix, p.matiere_s, p.couleur_s, p.id_fournisseur, c.titre, f.entreprise, GROUP_CONCAT(CONCAT(ps.matiere, ' ', ps.couleur) ORDER BY ps.id ASC SEPARATOR ' et ') AS pierres_info, (SELECT pi.image_chemin FROM produit_image pi WHERE pi.id_produit = p.id LIMIT 1) AS image_chemin FROM produit p LEFT JOIN produit_suplement ps ON ps.id_produit = p.id LEFT JOIN fournisseur f ON f.id = p.id_fournisseur LEFT JOIN collection c ON c.id = p.id_collection WHERE p.id = :id");
-        $stmt->bindParam(':id', $idProduit);
+        $stmt = $conn->prepare("SELECT f.entreprise FROM fournisseur f JOIN produit p ON f.id = p.id_fournisseur WHERE p.id = :id_produit");
+        $stmt->bindParam(':id_produit', $idProduit);
         $stmt->execute();
-        $produitSpe = $stmt->fetch(PDO::FETCH_ASSOC);
+        $vendeur = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $pierresInfo = $produitSpe['pierres_info'];
-        $titreProduit = $produitSpe['type_produit'] 
-        . (!empty($produitSpe['motif']) ? " " . $produitSpe['motif'] : "") 
-        . " " . $produitSpe['matiere_p'] . " " . $produitSpe['couleur_p'] 
-        . (!empty($produitSpe['matiere_s']) ? " " . $produitSpe['matiere_s'] : "") 
-        . (!empty($produitSpe['couleur_s']) ? " " . $produitSpe['couleur_s'] : "") 
-        . (!empty($pierresInfo) ? " " . $pierresInfo : "");
-
-        $prix = $produitSpe['prix'];
-        $vendeur = $produitSpe['entreprise'];
+        $titreProduit = $produit['nom_produit'];
+        $prix = $produit['prix_achat'];
+        $vendeur = $vendeur['entreprise'];
 
         $pdf->TableRow($titreProduit, $vendeur, $prix, $ligne % 2 === 0);
         $ligne++;

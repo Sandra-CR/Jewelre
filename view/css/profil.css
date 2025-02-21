@@ -353,8 +353,7 @@
     cursor: pointer;
 }
 
-#ajouterAdresseP,
-#modifAdresseP {
+#ajoutAdresse {
     padding: 5px 15px;
     color: #fff;
     background-color: #AE9576;

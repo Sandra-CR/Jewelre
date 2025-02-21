@@ -2,6 +2,8 @@
 <?php 
 session_start();
 include ('../../model/bdd.php');
+$idClient = $_SESSION['id'];
+
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -164,30 +166,42 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
         echo "Erreur : " . $e->getMessage();
         exit();
     }
-
-
-    // if(isset($_POST['ajout-adresse'])) {
-        if (isset($_POST['ajout-adresse']) && !empty($_POST['pays']) && !empty($_POST['ville']) && !empty($_POST['rue']) && !empty($_POST['numero'])) {
-            try {
-                $stmt = $conn->prepare("INSERT INTO adresse (pays, ville, rue, numero, active, id_client) VALUES (:pays, :ville, :rue, :numero, :active, :id_client)");
-                $stmt->bindParam(':pays', $_POST['pays']);
-                $stmt->bindParam(':ville', $_POST['ville']);
-                $stmt->bindParam(':rue', $_POST['rue']);
-                $stmt->bindParam(':numero', $_POST['numero']);
-                $stmt->bindParam(':numero', 0);
-                $stmt->bindParam(':id_client', $clientId);
-                $stmt->execute();
-        
-                header("Location: profil.php");
-                exit();
-            } catch (PDOException $e) {
-                die("Erreur SQL : " . $e->getMessage());
-            }
-        } else {
-            echo "Tous les champs doivent être remplis!";
-        }
-    // }
 }
+
+
+// ------------------------------
+// Traitement ADRESSE -----------
+// ------------------------------
+
+if(isset($_POST['supprAdresse'])) {
+    $stmt = $conn->prepare("DELETE FROM adresse WHERE id = :id AND id_client = :id_client");
+    $stmt->bindParam(':id', $_POST['idAdresse']);
+    $stmt->bindParam(':id_client', $idClient);
+    $stmt->execute();
+
+    header('Location: profil.php#adresse');
+    exit();
+}
+
+if (isset($_POST['ajoutAdresse']) && !empty($_POST['pays']) && !empty($_POST['ville']) && !empty($_POST['rue']) && !empty($_POST['numero'])) {
+    try {
+        $active = 0;
+        $stmt = $conn->prepare("INSERT INTO adresse (pays, ville, rue, numero, active, id_client) VALUES (:pays, :ville, :rue, :numero, :active, :id_client)");
+        $stmt->bindParam(':pays', $_POST['pays']);
+        $stmt->bindParam(':ville', $_POST['ville']);
+        $stmt->bindParam(':rue', $_POST['rue']);
+        $stmt->bindParam(':numero', $_POST['numero'], PDO::PARAM_INT);
+        $stmt->bindParam(':active', $active, PDO::PARAM_INT);
+        $stmt->bindParam(':id_client', $idClient, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        header("Location: profil.php");
+        exit();
+    } catch (PDOException $e) {
+        die("Erreur SQL : " . $e->getMessage());
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -367,7 +381,7 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
             </form>
         <?php } ?>
     </div>
-
+    
     <?php if(!empty($_SESSION['pseudo'])) { ?>
         <div class="profile-contenu" id="adresse">
             <?php 
@@ -390,13 +404,9 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
                             <h4 id="adresseDisplay"><?php echo $adresse['numero'] .' '. $adresse['rue'] .', '. $adresse['ville'] .' <span id="uppercase">('. $adresse['pays'] .')</span>'; ?></h4>
                         </div>
                         <div class="buttons-adresse">
-                            <form method="POST">
-                                <input type="hidden" value="<?php echo $adresse['id']; ?>" name="thisAdresse">
-                                <!-- Mettre une adresse en actif -->
-                            </form>
-                            <form method="POST">
-                                <input type="hidden" value="<?php echo $adresse['id']; ?>" name="thisAdresseSuppr">
-                                <button type="button" name="supprAdresse" id="supprAdresse"><i class='bx bxs-trash-alt'></i></button>
+                            <form method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette adresse ?');">
+                                <input type="hidden" value="<?php echo $adresse['id']; ?>" name="idAdresse">
+                                <button type="submit" name="supprAdresse" id="supprAdresse"><i class='bx bxs-trash-alt'></i></button>
                             </form>
                         </div>
                     </div> 
@@ -414,7 +424,7 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
                 <div class="popup-content">
                     <span id="closePopup" class="close">&times;</span>
                     <h2>Ajouter une adresse</h2>
-                    <form method="post" action="">
+                    <form method="POST" action="">
                         <div class="form-content-adresse">
                             <div class="input-group-popup">
                                 <label for="numero">N°</label>
@@ -433,7 +443,7 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
                                 <input name="pays" type="text">
                             </div>
                         </div>
-                        <button id="ajoutAdresse" class="ajout-adresse" name="ajout-adresse" type="submit">Ajouter</button>
+                        <button id="ajoutAdresse" class="ajout-adresse" name="ajoutAdresse" type="submit">Ajouter</button>
                     </form>
                 </div>
             </div>
@@ -472,42 +482,31 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
                         </div>
 
                         <?php 
-                        $calculPrixTotal = 0;
+                        // $calculPrixTotal = 0;
                         foreach($contenus as $contenu) {
-                            $stmt = $conn->prepare("SELECT p.id, p.type_produit, p.motif, p.matiere_p, p.couleur_p, p.prix, p.matiere_s, p.couleur_s, c.titre, g.genre,
-                            GROUP_CONCAT(
-                            CONCAT(ps.matiere, ' ', ps.couleur) 
-                            ORDER BY ps.id ASC SEPARATOR ' et '
-                            ) AS pierres_info,
-                            (SELECT pi.image_chemin FROM produit_image pi WHERE pi.id_produit = p.id LIMIT 1) AS image_chemin
-                            FROM produit p
-                            LEFT JOIN produit_suplement ps ON ps.id_produit = p.id
-                            LEFT JOIN collection c ON c.id = p.id_collection
-                            LEFT JOIN genre g ON g.id = p.id_genre
-                            WHERE p.id = :id");
-                            $stmt->bindParam(':id', $contenu['id_produit']);
-                            $stmt->execute();
-                            $produit = $stmt->fetch(PDO::FETCH_ASSOC);
-                            $pierresInfo = $produit['pierres_info'];
-                            $calculPrixTotal += $produit['prix']; 
                             ?>
 
                             <div class="produit-commande">
-                                <?php if(!empty($produit)) { ?>
+                                <?php if(!empty($contenu)) {
+                                    $stmt = $conn->prepare("SELECT image_chemin FROM produit_image WHERE id_produit = :id_produit LIMIT 1");
+                                    $stmt->bindParam(':id_produit', $contenu['id_produit']);
+                                    $stmt->execute();
+                                    $image = $stmt->fetch(PDO::FETCH_ASSOC); ?>
+
                                     <div class="produit-group">
-                                        <img src="<?php echo $produit['image_chemin']; ?>" alt="#">
-                                        <h4><?php echo $produit['type_produit'] . " " . $produit['motif'] . " " . $produit['matiere_p'] . " " . $produit['couleur_p'] . " " . $produit['matiere_s'] . " " . $produit['couleur_s'] . " " . $pierresInfo; ?></h4>
+                                        <img src="<?php echo $image['image_chemin']; ?>" alt="#">
+                                        <h4><?php echo $contenu['nom_produit'] ?></h4>
                                     </div>
-                                    <p id="prixProduit"><?php echo $produit['prix'] . "€"; ?></p>
+                                    <p id="prixProduit"><?php echo $contenu['prix_achat'] . "€"; ?></p>
                                 <?php } ?>
                             </div>
                         <?php } 
 
-                        if($commande['prix_total'] > $calculPrixTotal) { ?>
-                            <div class="produit-commande">
+                        // if($commande['prix_total'] > $calculPrixTotal) { ?>
+                            <!-- <div class="produit-commande">
                                 <p id="message"><i class='bx bxs-error-circle bx-sm'></i> Un ou plusieurs articles de votre commande ont été supprimés (valeur: <?php echo $commande['prix_total'] - $calculPrixTotal; ?>€)</p>
                             </div>  
-                        <?php } ?>
+                        <?php// } ?> -->
                         
                     </div>
 
