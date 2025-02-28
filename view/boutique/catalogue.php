@@ -13,8 +13,7 @@ try {
 
     $filtres = [];
     $sql = "
-     SELECT p.id, p.type_produit, p.motif, p.matiere_p, p.couleur_p, p.prix, p.matiere_s, p.couleur_s,c.titre, g.genre,
-       -- Utilisation de GROUP_CONCAT pour combiner les informations des pierres
+     SELECT p.id, p.type_produit, p.motif, p.matiere_p, p.couleur_p, p.prix, p.matiere_s, p.couleur_s, c.titre, g.genre,
        GROUP_CONCAT(
            CONCAT(ps.matiere, ' ', ps.couleur) 
            ORDER BY ps.id ASC SEPARATOR ' et '
@@ -40,9 +39,6 @@ try {
     if(isset($_GET['filtre_collier'])) {
         $filtreConditions[] = "p.type_produit = 'Collier'";
     }
-    if(isset($_GET['filtre_collection'])) {
-        $filtreConditions[] = "p.type_produit = 'Collection'";
-    }
 
     $filtreGenres = [];
     if(isset($_GET['filtre_homme'])) {
@@ -66,7 +62,8 @@ try {
         $sql .= " AND (" . implode(" OR ", $filtreGenres) . ")";
     }
 
-    $sql .= " GROUP BY p.id ORDER BY RAND()";
+    $sql .= " GROUP BY p.id ORDER BY RAND();";
+    
 
     $stmt = $conn->query($sql);
     $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -110,8 +107,7 @@ try {
                         <label for="filtre_collier">Collier</label>
                     </div>
                     <div class="filtre-group">
-                        <input type="checkbox" name="filtre_collection" <?php echo isset($_GET['filtre_collection']) ? 'checked' : ''; ?>>
-                        <label for="filtre_collection">Collection</label>
+                        <a href="collection.php">Voir les collections</a>
                     </div>
                 </div>
                 <div class="line"></div>

@@ -11,3 +11,24 @@ body {
     background-color: #F5EBE4;
 }
 
+#btnRetour {
+    position: absolute;
+    z-index: 1;
+    left: 12px;
+    bottom: 80%;
+    border: none;
+    background: none;
+    color: #AE9576;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+#btnRetour:hover {
+    color:#caaf8d;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+}
+
+#erreur { color: #8d1313; }
+#succes { color: #345c1f; }

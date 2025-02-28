@@ -9,7 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Jewelr-e | Accueil</title>
 </head>
-<body>
+<body id="main">
     <!------------------------ NAVBAR ------------------------>
     <?php include ('../include/navbar.php');?>
 

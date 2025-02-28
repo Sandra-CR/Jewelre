@@ -102,14 +102,18 @@ if(isset($_SESSION['pseudo'])) {
                 echo "<li><a href=\"/Jewelre/view/admin/admin_dashboard.php\">DASHBOARD</a></li>";
                 echo "<li><a href=\"/Jewelre/view/admin/admin_utilisateurs.php\">UTILISATEURS</a></li>";
                 echo "<li><a href=\"/Jewelre/view/admin/admin_produits.php\">PRODUITS</a></li>";
+            } else if(isset($_SESSION['entreprise'])) {
+                echo "<li><a href=\"/Jewelre/view/vendeur/add_bague.php\">AJOUTER UN ARTICLE</a></li>";
+                echo "<li><a href=\"/Jewelre/view/vendeur/inventaire.php\">MES ARTICLES</a></li>";
+                echo "<li><a href=\"/Jewelre/view/vendeur/inventaire_collection.php\">MES COLLECTIONS</a></li>";
+                echo "<li><a href=\"/Jewelre/view/vendeur/notification.php\">MES COMMANDES</a></li>";
             } else {
                 echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_bague=on\">BAGUES</a></li>";
                 echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_earrings=on\">BOUCLES D'OREILLES</a></li>";
                 echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_bracelet=on\">BRACELETS</a></li>";
                 echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_collier=on\">COLLIERS</a></li>";
-                echo "<li><a href=\"/Jewelre/view/boutique/catalogue.php?filtre_collection=on\">COLLECTIONS</a></li>";
+                echo "<li><a href=\"/Jewelre/view/boutique/collection.php\">COLLECTIONS</a></li>";
             }
-            
             ?>
         </ul>
     </div>

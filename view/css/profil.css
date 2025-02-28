@@ -13,32 +13,13 @@
     justify-content: start;
     gap: 80px;
 }
-#btnRetour {
-    position: absolute;
-    z-index: 1;
-    left: 10px;
-    bottom: 80%;
-    border: none;
-    background: none;
-    color: #AE9576;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-#btnRetour:hover {
-    color:#caaf8d;
-    cursor: pointer;
-    text-decoration: underline;
-    transition: all 0.3s ease;
-}
+
 #erreur {
-    color: #8d1313;
     font-size: 0.9rem;
     text-align: center;
     margin-bottom: 10px;
 }
 #succes {
-    color: #345c1f;
     font-size: 0.9rem;
     text-align: center;
     margin-bottom: 10px;
@@ -431,4 +412,29 @@
 #prixProduit {
     font-size: 0.8rem;
     color: #756249;
+}
+
+
+.deleteSection {
+    width: 86%;
+    margin: 100px auto 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+.deleteSection button {
+    padding: 10px 16px;
+    margin: 0 auto;
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #8d1313;
+    border: 3px solid #8d1313;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.deleteSection button:hover {
+    color: #8d1313;
+    background-color: #fff;
+    transition: all 0.3s;
 }

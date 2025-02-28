@@ -44,7 +44,7 @@ if(isset($_POST['supprimer-item'])) {
 }
 
 if(isset($_POST['finaliserPanier'])) {
-    $stmt = $conn->prepare("SELECT * FROM adresse WHERE id_client = :id_client AND active = 1");
+    $stmt = $conn->prepare("SELECT * FROM adresse WHERE id_client = :id_client LIMIT 1");
     $stmt->bindParam(':id_client', $idClient);
     $stmt->execute();
     $adresse = $stmt->fetch(PDO::FETCH_ASSOC);

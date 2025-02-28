@@ -61,6 +61,14 @@ h1 {
 .filtre-group label {
     font-size: 0.95rem;
 }
+.filtre-group a {
+    color: #887256;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 3px;
+}
+.filtre-group a:hover { color: #AE9576; }
 
 .line {
     width: 100%;
@@ -230,6 +238,116 @@ span {
     font-weight: 600;
     color: #a08666;
 }
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ----- LISTE DES COLLECTIONS ------------------------------------------------------------------ */
+/* ---------------------------------------------------------------------------------------------- */
+
+.liste-collections {
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   
+    gap: 1.5vw;
+    margin: 6vh auto;
+    padding: 0 5vh;
+}
+
+.collection-item {
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    transition: all 0.2s ease;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+.collection-item:hover {
+    transform: scale(1.05);
+    z-index: 1; 
+    transition: all 0.4s ease;
+}
+.collection-desc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+.collection-desc:hover {
+    background-color: #0000006d;
+}
+
+.collection-desc .haut-collection {
+    display: flex;
+    justify-content: space-between;
+}
+.collection-item img {
+    width: 100%;
+    min-height: 17vw;
+    height: 17vw;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.collection-item h2 {
+    margin: 5px;
+    padding: 0 7px 2px;
+    border-radius: 5px;
+    text-transform: capitalize;
+    text-decoration: transparent;
+}
+.collection-item a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    text-shadow: 1px 1px 0 #AE9576, 1px -1px 0 #AE9576, -1px 1px 0 #AE9576, -1px -1px 0 #AE9576, 1px 0px 0 #AE9576, 0px 1px 0 #AE9576, -1px 0px 0 #AE9576, 0px -1px 0 #AE9576;
+}
+.collection-desc .bottom {
+    display: none;
+    color: #fff;
+    font-size: 13px;
+}
+
+.collection-desc:hover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.collection-desc:hover .haut-collection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.collection-desc:hover .bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 15px;
+}
+.collection-desc:hover .haut-collection a {
+    font-size: 24px;
+}
+.arrow-to-page {
+    background-color: #fff;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.arrow-to-page i {
+    color: #AE9576;
+    text-shadow: none;
+    font-size: 25px;
+    padding: 3px;
+}
+.collection-desc:hover .arrow-to-page {
+    display: flex;
+}
+
 
 
 /* ---------------------------------------------------------------------------------------------- */

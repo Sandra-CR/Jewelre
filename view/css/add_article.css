@@ -71,6 +71,7 @@ label {
 }
 input[type~="text"],
 input[type~="number"],
+input[type~="date"],
 select {
     border: none;
     width: 58%;
@@ -105,15 +106,6 @@ input:focus {
 .pierres {
     width: 26vw;
 }
-
-/* Pour le js */
-/* .pierre {
-    display: none;
-}
-.check.secondaire {
-    display: none;
-} */
-/* ---------- */
 
 .check {
     display: flex;
@@ -174,4 +166,47 @@ span.succes {
     background-color: #AE9576;
     border: 1px solid transparent;
     padding: 1.5vh 1.5vw;
+}
+
+
+/* ----------------------------------------- */
+/* ----------------------------------------- */
+/* ----------------------------------------- */
+
+.articles-collection {
+    display: flex;
+    flex-direction: column;
+    width: 45vw;
+    margin-left: 5vw;
+}
+.articles-collection .window {
+    background-color: #fff;
+    height: 70vh;
+    overflow-x: hidden;
+}
+.articles-collection .item-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+}
+.articles-collection .item-group:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.item-group .left {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.articles-collection img {
+    width: 40px;
+    height: 40px;
+}
+.articles-collection a {
+    color: #756249;
+    font-size: 13px;
+}
+.articles-collection a:hover {
+    text-decoration: underline;
 }

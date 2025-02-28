@@ -168,6 +168,19 @@ if(isset($_POST['updateVendeur']) || isset($_POST['updateClient'])) {
     }
 }
 
+if(isset($_POST['supprCompte'])) {
+    if(isset($_SESSION['pseudo'])) { $sql = "DELETE FROM client WHERE id = :id"; }
+    else if(isset($_SESSION['entreprise'])) { $sql = "DELETE FROM fournisseur WHERE id = :id"; }
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $_POST['idUser']);
+    $stmt->execute();
+    session_destroy();
+
+    $_SESSION['succes'] = 'Le compte a été supprimé avec succès';
+    header('Location: index.php');
+    exit();
+}
+
 
 // ------------------------------
 // Traitement ADRESSE -----------
@@ -518,6 +531,12 @@ if (isset($_POST['ajoutAdresse']) && !empty($_POST['pays']) && !empty($_POST['vi
             <?php } ?>       
         </div>
     <?php } ?>
+
+    <form action="" method="POST" class="deleteSection" onsubmit="return confirm('Voulez-vous vraiment supprimer votre compte ? Aucun retour en arrière n\'est possible.');">
+        <input type="hidden" name="idUser" value="<?php echo $_SESSION['id']; ?>">
+        <button type="submit" name="supprCompte">Supprimer le compte</button>
+    </form>
+
     <?php include('../include/footer.php'); ?>
 
     <!--------------------------------------------------------->

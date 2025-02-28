@@ -1,0 +1,141 @@
+.collection {
+    width: 100%;
+}
+.collection-image img {
+    width: 100%;
+    height: 60vh;
+    object-fit: cover;
+    display: none;
+}
+
+.collection-content {
+    padding-top: 30px;
+    width: 100%;
+    background-color: #fff;
+}
+.collection-content .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: fit-content;
+    margin: 0 auto 25px;
+    padding: 7px 7px 7px 20px;
+    border-radius: 22px;
+    background-color: #AE9576;
+}
+.title h2 {
+    color: #fff;
+    font-size: 26px;
+}
+#date {
+    color: #AE9576;
+    background-color: #fff;
+    font-size: 22px;
+    padding: 2px 15px;
+    border-radius: 15px;
+}
+
+.produits {
+    width: 90%;
+    margin: 0 auto;
+}
+.produits h4 {
+    color: #AE9576;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+
+
+
+
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+.prev, .next {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 11px 4px;
+    color: #AE9576;
+    background-color: #ffffffc7;
+    border: 1px solid #AE9576;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    transition-duration: 200ms;
+}
+.prev { left: 10px; }
+.next { right: 19px; }
+
+.prev:hover, .next:hover {
+    background-color: #fff;
+    transition-duration: 200ms;
+}
+
+.produit-item {
+    position: relative;
+    width: calc(25% - 15px);
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #AE9576;
+    flex-shrink: 0;
+}
+.produit-desc {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.produit-item img {
+    width: 100%;
+    min-height: 19vw;
+    height: 19vw;
+    object-fit: cover;
+}
+.produit-item .haut-produit {
+    margin-bottom: 4vh;
+}
+.produit-item h2 {
+    font-size: 16px;
+    text-transform: capitalize;
+    text-decoration: transparent;
+    margin-bottom: 10px;
+}
+.produit-item h2:hover {
+    text-decoration: underline #AE9576;
+    transition: all 0.2s ease;
+}
+.produit-item button {
+    background-color: transparent;
+    border: none;
+    color: #AE9576;
+    cursor: pointer;
+}
+.produit-item a {
+    color: #AE9576;
+    text-decoration: none;
+}
+.produit-item h4 {
+    font-weight: 600;
+    color: #a08666;
+    position: absolute;
+    bottom: 0;
+    right: 12px;
+}

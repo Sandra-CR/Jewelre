@@ -207,6 +207,7 @@ footer .top .logo i {
     color: #8f7657;
     margin: 0 2px;
 }
+
 footer .top h3 {
     text-transform: uppercase;
     padding: 10px 40px;
@@ -220,6 +221,12 @@ footer .top h3 {
 footer .top li {
     margin-bottom: 10px;
     text-align: center;
+    transition: transform 0.3s;
+}
+footer .top li:hover {
+    transform: scale(1.1);
+    text-decoration: underline;
+    transition: transform 0.3s;
 }
 
 /* ---------- FOOTER SEPARATEUR ---------- */
