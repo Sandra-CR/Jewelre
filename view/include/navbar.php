@@ -103,6 +103,7 @@ if(isset($_SESSION['pseudo'])) {
                 echo "<li><a href=\"/Jewelre/view/admin/admin_utilisateurs.php\">UTILISATEURS</a></li>";
                 echo "<li><a href=\"/Jewelre/view/admin/admin_produits.php\">PRODUITS</a></li>";
             } else if(isset($_SESSION['entreprise'])) {
+                echo "<li><a href=\"/Jewelre/view/vendeur/dashboard.php\">DASHBOARD</a></li>";
                 echo "<li><a href=\"/Jewelre/view/vendeur/add_bague.php\">AJOUTER UN ARTICLE</a></li>";
                 echo "<li><a href=\"/Jewelre/view/vendeur/inventaire.php\">MES ARTICLES</a></li>";
                 echo "<li><a href=\"/Jewelre/view/vendeur/inventaire_collection.php\">MES COLLECTIONS</a></li>";
