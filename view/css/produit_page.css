@@ -248,12 +248,15 @@ h3 {
 /* ---------------------------------------------------------------------------------------------- */
 /* ----- DESCRIPTION COMPLETE DU PRODUIT ------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------------- */
+#modifArticle {
+    background-color: #fff;
+    padding-bottom: 2%;
+}
 .produit-desc {
     width: 94%;
-    background-color: #fff;
     display: flex;
     justify-content: space-around;
-    padding: 4% 3%;
+    padding: 4% 3% 1.5%;
 }
 
 /* -- Description group ----------------------- */
@@ -287,6 +290,50 @@ h3 {
     color: #AE9576;
     font-weight: 500;
 }
+
+input, select {
+    padding: 2px 5px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    outline: none;
+}
+.button-part {
+    width: 91%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+#modifBtn {
+    font-size: 15px;
+    color: #fff;
+    background-color: #AE9576;
+    padding: 8px 12px;
+    border: 1.5px solid #AE9576;
+    border-radius: 3px;
+    transition: 0.2s ease;
+}
+#modifBtn:hover {
+    color: #AE9576;
+    background-color: #fff;
+    transition: 0.4s ease;
+}
+
+
+#succes, #erreur {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    background-color: #fff;
+    padding: 3px 7px 3px 3px;
+    border: 1px solid;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
 
 /* ---------------------------------------------------------------------------------------------- */
 /* ----- SPE VENDEUR ---------------------------------------------------------------------------- */
@@ -396,60 +443,8 @@ h3 {
     margin: 20px 0;
     
 }
-  
 
 
-.image-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
-    justify-content: center;
-    align-items: center;
-}
-
-.image-item img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    display: block;
-}
-
-.image-item {
-    position: relative;
-    display: inline-block;
-    transition: all 0.3s ease;
-
-}
-.image-item:hover {
-    transform: scale(1.15);
-    z-index: 1; 
-    transition: all 0.5s ease;
-}
-
-.btn-suppr-img {
-    position: absolute;
-    top: 5px; 
-    right: 5px; 
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    color: white;
-    background-color: transparent;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 24px;
-    transition: all 0.3s ease;
-}
-.btn-suppr-img:hover {
-    color: #ba1f1f;
-    border-color: #ba1f1f;
-    background-color: #ffffffa0;
-    transition: all 0.3s ease;
-}
 
 
 /* ---------------------------------------------------------------------------------------------- */

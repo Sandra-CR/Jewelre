@@ -99,6 +99,16 @@ input:focus {
     outline: none;
 }
 
+.caracteristiques.plus {
+    width: 35vw;
+}
+#imgCollection {
+    width: 35vw;
+    height: 35vh;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
 .caracteristiques {
     width: 30vw;
 }
@@ -172,6 +182,10 @@ span.succes {
 /* ----------------------------------------- */
 /* ----------------------------------------- */
 /* ----------------------------------------- */
+
+.articles-collection.plus {
+    width: 55vw;
+}
 
 .articles-collection {
     display: flex;

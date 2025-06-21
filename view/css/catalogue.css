@@ -263,11 +263,13 @@ span {
     position: relative;
     cursor: pointer;
 }
-.collection-item:hover {
+.collection-item:hover,
+#addLink:hover {
     transform: scale(1.05);
     z-index: 1; 
     transition: all 0.4s ease;
 }
+
 .collection-desc {
     position: absolute;
     top: 0;
@@ -287,7 +289,7 @@ span {
 .collection-item img {
     width: 100%;
     min-height: 17vw;
-    height: 17vw;
+    height: 17.3vw;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -346,6 +348,31 @@ span {
 }
 .collection-desc:hover .arrow-to-page {
     display: flex;
+}
+
+
+#addLink {
+    width: 100%;
+    height: 17vw;
+    background-color: #fff;
+    border: 2px solid #AE9576;
+    border-radius: 10px;
+}
+.collection-plus {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #AE9576;
+}
+.collection-plus i {
+    transition: 0.2s ease;
+}
+#addLink:hover .collection-plus i {
+    transform: scale(1.1);
+    transition: 0.3s ease;
 }
 
 

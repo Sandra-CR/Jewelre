@@ -1,7 +1,7 @@
 <?php 
 session_start(); 
 if (!isset($_SESSION['entreprise'])) {
-    header("Location: login_vendeur.php");
+    header("Location: /Jewelre/view/main/login_vendeur.php");
     exit();
 }
 
@@ -55,7 +55,7 @@ if(isset($_SESSION['pseudo'])){
 // Appel des données produit
 $idProduit = $_GET['id'];
 $idTailleActive = $_GET['taille'];
-$stmt = $conn->prepare("SELECT p.id, p.type_produit, p.motif, p.matiere_p, p.couleur_p, p.matiere_s, p.couleur_s, p.prix, p.id_fournisseur,
+$stmt = $conn->prepare("SELECT p.id, p.type_produit, p.motif, p.matiere_p, p.couleur_p, p.matiere_s, p.couleur_s, p.prix, p.id_genre, p.id_fournisseur,
 (SELECT pi.image_chemin FROM produit_image pi WHERE pi.id_produit = p.id LIMIT 1) AS image_chemin,
 ps.matiere, ps.couleur, ps.forme, c.titre, g.genre
 FROM produit p 
@@ -108,6 +108,97 @@ if(isset($_POST['ajouterTaille'])) {
     $stmt->bindParam(':id_produit', $idProduit);
     $stmt->execute();
 } 
+
+// Modifier les données de l'article
+if(isset($_POST['modifierArticle'])) {
+    // Vérifie les champs obligatoires
+    if (!empty($_POST['prix']) && !empty($_POST['matiere_p']) && !empty($_POST['couleur_p']) && !empty($_POST['genre'])) {
+        $modifProduitTaille = 0;
+        if ($produit['type_produit'] === "Bague") {
+            if (!empty($_POST['quantite']) && !empty($_POST['poids']) && !empty($_POST['tour_doigt'])) {
+                $stmt = $conn->prepare("UPDATE produit_taille SET quantite = :quantite, poids = :poids, tour_doigt = :tour_doigt");
+                $stmt->bindParam(':quantite', $_POST['quantite']);
+                $stmt->bindParam(':poids', $_POST['poids']);
+                $stmt->bindParam(':tour_doigt', $_POST['tour_doigt']);
+                $stmt->execute();
+                $modifProduitTaille = $stmt->rowCount();
+            } else {
+                $_SESSION['erreur'] = "Veuillez remplir tous les champs obligatoires.";
+            }
+        } else {
+            if (!empty($_POST['quantite']) && !empty($_POST['poids']) && !empty($_POST['longueur']) && !empty($_POST['largeur'])) {
+                $stmt = $conn->prepare("UPDATE produit_taille SET quantite = :quantite, poids = :poids, longueur = :longueur, largeur = :largeur");
+                $stmt->bindParam(':quantite', $_POST['quantite']);
+                $stmt->bindParam(':poids', $_POST['poids']);
+                $stmt->bindParam(':longueur', $_POST['longueur']);
+                $stmt->bindParam(':largeur', $_POST['largeur']);
+                $stmt->execute();
+                $modifProduitTaille = $stmt->rowCount();
+            } else {
+                $_SESSION['erreur'] = "Veuillez remplir tous les champs obligatoires.";
+            }
+        }
+
+        $modifPierres = 0;
+        if (isset($_POST['matiere']) && is_array($_POST['matiere'])) {
+            foreach ($_POST['matiere'] as $id_sup => $matiere) {
+                $couleur = $_POST['couleur'][$id_sup] ?? null;
+                $nombre = $_POST['nombre'][$id_sup] ?? null;
+                $forme = $_POST['forme'][$id_sup] ?? null;
+                $caratage = $_POST['caratage'][$id_sup] ?? null;
+                $sertis = $_POST['sertis'][$id_sup] ?? null;
+
+                $stmt = $conn->prepare("UPDATE produit_suplement SET matiere = :matiere, couleur = :couleur, 
+                nombre = :nombre, forme = :forme, caratage = :caratage, sertis = :sertis WHERE id = :id_sup");
+
+                $stmt->bindParam(':matiere', $matiere);
+                $stmt->bindParam(':couleur', $couleur);
+                $stmt->bindParam(':nombre', $nombre);
+                $stmt->bindParam(':forme', $forme);
+                $stmt->bindParam(':caratage', $caratage);
+                $stmt->bindParam(':sertis', $sertis);
+                $stmt->bindParam(':id_sup', $id_sup, PDO::PARAM_INT);
+
+                $stmt->execute();
+                $modifPierres += $stmt->rowCount();
+            }
+        }
+
+        $matiere_s = $_POST['matiere_s'] ?? null;
+        $couleur_s = $_POST['couleur_s'] ?? null;
+        $motif = $_POST['motif'] ?? null;
+        $chaine = $_POST['chaine'] ?? null;
+        $fermoir = $_POST['fermoir'] ?? null;
+
+        $stmt = $conn->prepare("UPDATE produit SET prix = :prix, matiere_p = :matiere_p, couleur_p = :couleur_p, matiere_s = :matiere_s, couleur_s = :couleur_s, 
+        motif = :motif, chaine = :chaine, fermoir = :fermoir, id_genre = :id_genre WHERE id = :id");
+        $stmt->bindParam(':prix', $_POST['prix']);
+        $stmt->bindParam(':matiere_p', $_POST['matiere_p']);
+        $stmt->bindParam(':couleur_p', $_POST['couleur_p']);
+        $stmt->bindParam(':matiere_s', $matiere_s);
+        $stmt->bindParam(':couleur_s', $couleur_s);
+        $stmt->bindParam(':motif', $motif);
+        $stmt->bindParam(':chaine', $chaine);
+        $stmt->bindParam(':fermoir', $fermoir);
+        $stmt->bindParam(':id_genre', $_POST['genre']);
+        $stmt->bindParam(':id', $idProduit);
+        $stmt->execute();
+        $modifProduit = $stmt->rowCount();
+
+        if ($modifProduit > 0 || $modifProduitTaille > 0 || $modifPierres > 0) {
+            $_SESSION['message'] = "Les modifications ont été appliquées avec succès";
+            $query = http_build_query($_GET);
+            header("Location: produit_page.php?" . $query);
+            exit();
+        } else {
+            $_SESSION['erreur'] = "Veuillez modifier au moins un champ pour appliquer les modifications";
+        }
+    } else {
+        $_SESSION['erreur'] = "Veuillez remplir tous les champs obligatoires";
+    }
+
+    
+}
 ?>
 
 <!DOCTYPE html>
@@ -167,7 +258,7 @@ if(isset($_POST['ajouterTaille'])) {
     </div>
 
     <?php
-    // Si les info produit sont trouvées
+    // Si les infos produit sont trouvées
     if ($produit) { 
         // Récupération des images
         $stmt = $conn->prepare("SELECT image_chemin FROM produit_image WHERE id_produit = :id_produit");
@@ -180,6 +271,17 @@ if(isset($_POST['ajouterTaille'])) {
     <div class="retour">
         <button onclick="history.back();" id="btnRetour">< Retour</button>
     </div>
+
+    <!-- Message reussite et erreur -->
+    <?php
+    if (isset($_SESSION['message'])) {
+        echo '<p id="succes"><i class=\'bx bxs-check-circle bx-sm\'></i>' . $_SESSION['message'] . '</p>';
+        unset($_SESSION['message']);
+    } else if (isset($_SESSION['erreur'])) {
+        echo '<p id="erreur"><i class=\'bx bxs-error-circle bx-sm\'></i>' . $_SESSION['erreur'] . '</p>';
+        unset($_SESSION['erreur']);
+    }
+    ?>
 
     <div class="produit">
         <!-- Carousel des images du produit -->
@@ -289,7 +391,7 @@ if(isset($_POST['ajouterTaille'])) {
     </div>
 
     <!-- Modification de l'article par un formulaire -->
-    <form method="POST">
+    <form method="POST" id="modifArticle">
         <!-- PARTIE 1 -->
         <div class="produit-desc">
             <div class="desc-group">
@@ -298,21 +400,21 @@ if(isset($_POST['ajouterTaille'])) {
                 <div class="donnee-group">
                     <h5>Genre</h5> 
                     <select name="genre">
-                        <?php if($produit['genre'] == 1) { ?>
-                            <option value="1" default>Femme</option>
+                        <?php if($produit['id_genre'] == 1) { ?>
+                            <option value="1" selected>Femme</option>
                             <option value="2">Homme</option>
                         <?php } else { ?>
                             <option value="1">Femme</option>
-                            <option value="2" default>Homme</option>
+                            <option value="2" selected>Homme</option>
                         <?php } ?>
                     </select>
                 </div>
                 <?php if(!empty($tailleActive['tour_doigt'])) { ?>
                     <div class="donnee-group"><h5>Tour de doigt*</h5> <input type="number" min="42" max="76" step="2" name="tour_doigt" value="<?php echo $tailleActive['tour_doigt']; ?>"></div>
                 <?php } ?>
-                <div class="donnee-group"><h5>Quantité</h5> <input type="number" name="prix" value="<?php echo $tailleActive['quantite']; ?>"></div>
-                <div class="donnee-group"><h5>Prix*</h5> <input type="number" name="prix" value="<?php echo $produit['prix']; ?>"></div>
-                <div class="donnee-group"><h5>Poids total (gr)*</h5> <input type="number" name="poids" value="<?php echo $tailleActive['poids']; ?>"></div>
+                <div class="donnee-group"><h5>Quantité</h5> <input type="number" name="quantite" value="<?php echo $tailleActive['quantite']; ?>"></div>
+                <div class="donnee-group"><h5>Prix*</h5> <input type="number" name="prix" step="0.01" value="<?php echo $produit['prix']; ?>"></div>
+                <div class="donnee-group"><h5>Poids total (gr)*</h5> <input type="number" step="0.001" name="poids" value="<?php echo $tailleActive['poids']; ?>"></div>
                 <div class="donnee-group"><h5>Matière principale*</h5> <input type="text" name="matiere_p" value="<?php echo $produit['matiere_p']; ?>"></div>
                 <div class="donnee-group"><h5>Couleur principale*</h5> <input type="text" name="couleur_p" value="<?php echo $produit['couleur_p']; ?>"></div>
                 <?php if(!empty($produit['matiere_s'])) { ?>
@@ -329,8 +431,8 @@ if(isset($_POST['ajouterTaille'])) {
                     <div class="donnee-group"><h5>Type de chaine</h5> <input type="text" name="chaine" value="<?php echo $produit['chaine']; ?>"></div>
                 <?php } 
                 if(!empty($tailleActive['longueur']) && !empty($tailleActive['largeur'])) { ?>
-                    <div class="donnee-group"><h5>Longueur</h5> <input type="number" min="0" name="longueur" value="<?php echo $tailleActive['longueur']; ?>"></div>
-                    <div class="donnee-group"><h5>Largeur</h5> <input type="number" min="0" name="largeur" value="<?php echo $tailleActive['largeur']; ?>"></div>
+                    <div class="donnee-group"><h5>Longueur</h5> <input type="number" min="0" step="0.01" name="longueur" value="<?php echo $tailleActive['longueur']; ?>"></div>
+                    <div class="donnee-group"><h5>Largeur</h5> <input type="number" min="0" step="0.01" name="largeur" value="<?php echo $tailleActive['largeur']; ?>"></div>
                 <?php } 
                 if(!empty($produit['fermoir'])) {?>
                     <div class="donnee-group"><h5>Type de fermoir</h5> <input type="text" name="fermoir" value="<?php echo $produit['fermoir']; ?>"></div>
@@ -343,44 +445,33 @@ if(isset($_POST['ajouterTaille'])) {
             $stmt->bindParam(':id_produit', $idProduit);
             $stmt->execute();
             $pierres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            foreach($pierres as $pierre) { ?>
-                <div class="desc-group">
-                    <h2><?php echo $pierre['type_sup']; ?></h2>
-                    <div class="donnee-group"><h5>Type de pierre</h5> <input type="text" name="matiere" value="<?php echo $pierre['matiere']; ?>"></div>
-                    <div class="donnee-group"><h5>Couleur</h5> <input type="text" name="couleur" value="<?php echo $pierre['couleur']; ?>"></div>
-                    <?php if(!empty($pierre['nombre'])) { ?>
-                        <div class="donnee-group"><h5>Nombres de pierres</h5> <input type="number" name="nombre" value="<?php echo $pierre['nombre']; ?>"></div>
-                    <?php } ?>
-                    <?php if(!empty($pierre['forme'])) { ?>
-                        <div class="donnee-group"><h5>Forme du pendentif</h5> <input type="text" name="forme" value="<?php echo $pierre['forme']; ?>"></div>
-                    <?php } ?>
-                    <?php if(!empty($pierre['caratage'])) { ?>
-                        <div class="donnee-group"><h5>Caratage</h5> <input type="number" name="caratage" value="<?php echo $pierre['caratage']; ?>"></div>
-                    <?php } ?>
-                    <?php if(!empty($pierre['sertis'])) { ?>
-                        <div class="donnee-group"><h5>Type de sertis</h5> <input type="text" name="sertis" value="<?php echo $pierre['sertis']; ?>"></div>
-                    <?php } ?>
-                </div>
-            <?php } ?>
+            if (count($pierres) > 0) {
+               foreach($pierres as $pierre) { ?>
+                    <div class="desc-group">
+                        <h2><?php echo $pierre['type_sup']; ?></h2>
+                        <div class="donnee-group"><h5>Type de pierre</h5> <input type="text" name="matiere[<?php echo $pierre['id']; ?>]" value="<?php echo $pierre['matiere']; ?>"></div>
+                        <div class="donnee-group"><h5>Couleur</h5> <input type="text" name="couleur[<?php echo $pierre['id']; ?>]" value="<?php echo $pierre['couleur']; ?>"></div>
+                        <?php if(!empty($pierre['nombre'])) { ?>
+                            <div class="donnee-group"><h5>Nombres de pierres</h5> <input type="number" name="nombre[<?php echo $pierre['id']; ?>]" value="<?php echo $pierre['nombre']; ?>"></div>
+                        <?php } ?>
+                        <?php if(!empty($pierre['forme'])) { ?>
+                            <div class="donnee-group"><h5>Forme du pendentif</h5> <input type="text" name="forme[<?php echo $pierre['id']; ?>]" value="<?php echo $pierre['forme']; ?>"></div>
+                        <?php } ?>
+                        <?php if(!empty($pierre['caratage'])) { ?>
+                            <div class="donnee-group"><h5>Caratage</h5> <input type="number" name="caratage[<?php echo $pierre['id']; ?>]" value="<?php echo $pierre['caratage']; ?>"></div>
+                        <?php } ?>
+                        <?php if(!empty($pierre['sertis'])) { ?>
+                            <div class="donnee-group"><h5>Type de sertis</h5> <input type="text" name="sertis[<?php echo $pierre['id']; ?>]" value="<?php echo $pierre['sertis']; ?>"></div>
+                        <?php } ?>
+                    </div>
+                <?php } 
+            } ?> 
+            
+        
         </div>
-
-        <!-- PARTIE 2 -->
-        <div class="produit-desc">
-            <div class="desc-group">
-                <!-- Colonne 1 | Images -->
-                <h2>Images</h2>
-                <div class="image-grid">
-                    <?php foreach ($images as $image): ?>
-                        <div class="image-item">
-                            <img class="modif-img" src="<?php echo $image['image_chemin']; ?>" alt="#">
-                            <button type="submit" name="supprimerImage" class="btn-suppr-img"><i class='bx bxs-trash-alt'></i></button>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <input type="file" name="images[]" accept=".png, .jpg, .jpeg, .webp" multiple>
-            </div>
+        <div class="button-part">
+            <button type="submit" name="modifierArticle" id="modifBtn">Appliquer les modifications</button>
         </div>
-        <button type="submit" name="modifierArticle">Appliquer les modifications</button>
     </form>
     <?php 
     } else { ?>

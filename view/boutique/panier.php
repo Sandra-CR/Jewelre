@@ -1,7 +1,7 @@
 <?php 
 session_start(); 
 if (!isset($_SESSION['pseudo'])) {
-    header("Location: login_client.php");
+    header("Location: ../main/login_client.php");
     exit();
 }
 
@@ -20,6 +20,12 @@ try {
 // Récupérer les éléments du panier
 $panier_items = isset($_SESSION['panier']) && !empty($_SESSION['panier']) ? $_SESSION['panier'] : [];
 $total = 0;
+
+// Récupérer les adresses du client
+$stmt = $conn->prepare("SELECT * FROM adresse WHERE id_client = :id_client");
+$stmt->bindParam(':id_client', $idClient);
+$stmt->execute();
+$adresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Vider le panier si le formulaire est soumis
 if (isset($_POST['viderPanier'])) {
@@ -66,7 +72,7 @@ if(isset($_POST['finaliserPanier'])) {
  
         $stmt = $conn->prepare("INSERT INTO commande (date_commande, prix_total, id_adresse, id_client) VALUES (NOW(), :prix_total, :id_adresse, :id_client)");
         $stmt->bindParam(':prix_total', $totalCommande);
-        $stmt->bindParam(':id_adresse', $adresse['id']);
+        $stmt->bindParam(':id_adresse', $_POST['adresseChoisie']);
         $stmt->bindParam(':id_client', $idClient);
         $stmt->execute();
 
@@ -74,6 +80,13 @@ if(isset($_POST['finaliserPanier'])) {
 
         foreach($_SESSION['panier'] as $item) {
             list($id_produit, $id_taille) = explode("-", $item);
+            
+            $stmt = $conn->prepare("SELECT prix FROM produit p JOIN produit_taille pt ON pt.id_produit = p.id WHERE p.id = :id_produit AND pt.id = :id_taille");
+            $stmt->bindParam(':id_produit', $id_produit);
+            $stmt->bindParam(':id_taille', $id_taille);
+            $stmt->execute();
+            $produitPrix = $stmt->fetch(PDO::FETCH_ASSOC);
+
             $sql = "SELECT p.type_produit, p.motif, p.matiere_p, p.couleur_p, p.matiere_s, p.couleur_s, 
               GROUP_CONCAT(CONCAT(ps.matiere, ' ', ps.couleur) ORDER BY ps.id ASC SEPARATOR ' et ') AS pierres_info  
               FROM produit p LEFT JOIN produit_suplement ps ON ps.id_produit = p.id WHERE p.id = :id_produit GROUP BY p.id;";
@@ -88,7 +101,7 @@ if(isset($_POST['finaliserPanier'])) {
             $stmt->bindParam(':id_commande', $id_commande);
             $stmt->bindParam(':id_produit', $id_produit);
             $stmt->bindParam(':nom_produit', $nomProduit);
-            $stmt->bindParam(':prix_achat', $produit['prix']);
+            $stmt->bindParam(':prix_achat', $produitPrix['prix']);
             $stmt->execute();
         }
 
@@ -98,8 +111,6 @@ if(isset($_POST['finaliserPanier'])) {
         $_SESSION['commandePassee'] = true;
         header('Location: panier.php');
         exit();
-    } else {
-        $_SESSION['message'] = 'Veuillez enregistrer une adresse de livraison à votre compte pour procéder';
     }
 }
 ?>
@@ -205,17 +216,31 @@ if(isset($_POST['finaliserPanier'])) {
                 </table>
             </div>
             <div class="menu-droite">
-                <div class="prix-case">
-                    <p>Total</p> 
-                    <p id="prix-total"><?php echo htmlspecialchars($total);?>€</p>
-                </div>
+                <div class="menu-content">
+                    <div class="prix-case">
+                        <p>Total</p> 
+                        <p id="prix-total"><?php echo htmlspecialchars($total);?>€</p>
+                    </div>
 
-                <form method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir vider le panier ?');">
-                    <button type="submit" name="viderPanier">Vider le panier</button>
-                </form>
-                <form method="POST" id="panierForm">
-                    <button type="submit" name="finaliserPanier" id="finaliserBtn">Finaliser le panier</button>
-                </form>
+                    <form method="POST" id="panierForm">
+                        
+                            <?php 
+                            if(count($adresses) > 0) { ?>
+                                <select name="adresseChoisie">
+                                    <?php foreach($adresses as $adresse) { ?>
+                                        <option value="<?php echo $adresse['id']; ?>"><?php echo $adresse['numero'] ." ". $adresse['rue'] .", <span>". $adresse['ville'] ."</span>"; ?></option>
+                                    <?php } ?>
+                                </select>
+                            <?php } else {
+                                $_SESSION['message'] = 'Commander est impossible sans adresse de livraison. &nbsp;<a href="../main/profil.php">Ajouter une adresse</a>';
+                            } ?>
+                        
+                        <button type="submit" name="finaliserPanier" id="finaliserBtn">Finaliser le panier</button>
+                    </form>
+                    <form method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir vider le panier ?');">
+                        <button type="submit" name="viderPanier">Vider le panier</button>
+                    </form>
+                </div>
             </div>
         </div>
     <?php else: ?>

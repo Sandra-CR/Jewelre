@@ -1,7 +1,7 @@
 <?php 
 session_start(); 
 if (!isset($_SESSION['entreprise'])) {
-    header("Location: login_vendeur.php");
+    header("Location: /Jewelre/view/main/login_vendeur.php");
     exit();
 }
 

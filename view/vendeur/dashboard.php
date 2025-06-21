@@ -1,48 +1,54 @@
 <?php
-    session_start();
+session_start();
 
-    include ('../../model/bdd.php');
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch(PDOException $e) {
-        echo "Erreur : " . $e->getMessage();
-        exit();
-    }
-    
-    if (!isset($_SESSION['entreprise'])) {
-        header("Location: login_vendeur.php");
-        exit();
-    } 
+if (!isset($_SESSION['entreprise'])) {
+    header("Location: /Jewelre/view/main/login_vendeur.php");
+    exit();
+}
 
-    $idVendeur = $_SESSION['id'];
+include('../../model/bdd.php');
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+    exit();
+}
 
-    $stmt = $conn->prepare("SELECT id from produit WHERE id_fournisseur = :id_fournisseur");
-    $stmt->bindParam('id_fournisseur', $idVendeur);
-    $stmt->execute();
-    $produits = $stmt->fetchAll(PDO::FETCH_COLUMN);
+if (!isset($_SESSION['entreprise'])) {
+    header("Location: login_vendeur.php");
+    exit();
+}
 
-    if (empty($produits)) {
-        $nbVentes = 0;
-    } else {
-        $placeholders = implode(',', array_fill(0, count($produits), '?'));
-        $sqlVentes = "SELECT COUNT(*) FROM commande_contenu WHERE id_produit IN ($placeholders)";
-        $stmt = $conn->prepare($sqlVentes);
-        $stmt->execute($produits);
+$idVendeur = $_SESSION['id'];
 
-        $nbVentes = $stmt->fetchColumn();
-    }
+$stmt = $conn->prepare("SELECT id from produit WHERE id_fournisseur = :id_fournisseur");
+$stmt->bindParam('id_fournisseur', $idVendeur);
+$stmt->execute();
+$produits = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+if (empty($produits)) {
+    $nbVentes = 0;
+} else {
+    $placeholders = implode(',', array_fill(0, count($produits), '?'));
+    $sqlVentes = "SELECT COUNT(*) FROM commande_contenu WHERE id_produit IN ($placeholders)";
+    $stmt = $conn->prepare($sqlVentes);
+    $stmt->execute($produits);
+
+    $nbVentes = $stmt->fetchColumn();
+}
 
 
-    $stmt = $conn->prepare("SELECT COUNT(*) from produit WHERE id_fournisseur = :id_fournisseur");
-    $stmt->bindParam('id_fournisseur', $idVendeur);
-    $stmt->execute();
-    $produitsEnvente = $stmt->fetchColumn();
+$stmt = $conn->prepare("SELECT COUNT(*) from produit WHERE id_fournisseur = :id_fournisseur");
+$stmt->bindParam('id_fournisseur', $idVendeur);
+$stmt->execute();
+$produitsEnvente = $stmt->fetchColumn();
 
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,18 +56,20 @@
     <link rel="shortcut icon" href="../img/logo-site.png">
     <title>Tableau de bord | Jewelr-e</title>
 </head>
+
 <body>
     <!------------------------ NAVBAR ------------------------>
-    <?php include ('../include/navbar.php');?>
+    <?php include('../include/navbar.php'); ?>
 
     <div class="retour">
-            <button onclick="history.back();" id="btnRetour">< Retour</button>
+        <button onclick="history.back();" id="btnRetour">
+            < Retour</button>
     </div>
 
     <div class="dashboard-container">
         <div class="item vente">
-            
-            <?php if($nbVentes == 0) { ?>
+
+            <?php if ($nbVentes == 0) { ?>
                 <div class="rang" id="aucun">
                     <?php echo $nbVentes; ?>
                 </div>
@@ -70,7 +78,7 @@
                     <p>Vendez votre premier produit</p>
                 </div>
 
-            <?php } else if($nbVentes < 10) { ?>
+            <?php } else if ($nbVentes < 10) { ?>
                 <div class="rang" id="argent">
                     <?php echo $nbVentes; ?>
                 </div>
@@ -80,7 +88,7 @@
                     <p>Prochain rang dans <?php echo (10 - $nbVentes); ?> ventes</p>
                 </div>
 
-            <?php } else if($nbVentes < 50) { ?>
+            <?php } else if ($nbVentes < 50) { ?>
                 <div class="rang" id="or">
                     <?php echo $nbVentes; ?>
                 </div>
@@ -111,29 +119,29 @@
                     <h4>Produits disponibles</h4>
                 </div>
                 <h6>- 38 en vente</p>
-                <h6>- aucun hors vente</p>
+                    <h6>- aucun hors vente</p>
             </div>
 
             <div class="separateur"></div>
 
             <div class="right">
                 <h5>Répartition</h5>
-                    <div class="group">
-                        <p>Boucles d'oreilles</p>
-                        <div class="barre" style="width: 87px;"></div>
-                    </div>
-                    <div class="group">
-                        <p>Bracelets</p>
-                        <div class="barre" style="width: 165px;"></div>
-                    </div>
-                    <div class="group">
-                        <p>Colliers</p>
-                        <div class="barre" style="width: 200px;"></div>
-                    </div>
-                    <div class="group">
-                        <p>Bagues</p>
-                        <div class="barre" style="width: 229px;"></div>
-                    </div>
+                <div class="group">
+                    <p>Boucles d'oreilles</p>
+                    <div class="barre" style="width: 87px;"></div>
+                </div>
+                <div class="group">
+                    <p>Bracelets</p>
+                    <div class="barre" style="width: 165px;"></div>
+                </div>
+                <div class="group">
+                    <p>Colliers</p>
+                    <div class="barre" style="width: 200px;"></div>
+                </div>
+                <div class="group">
+                    <p>Bagues</p>
+                    <div class="barre" style="width: 229px;"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -143,6 +151,7 @@
     </div>
 
     <!------------------------ FOOTER ------------------------>
-    <?php include ('../include/footer.php');?>
+    <?php include('../include/footer.php'); ?>
 </body>
+
 </html>

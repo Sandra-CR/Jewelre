@@ -83,7 +83,7 @@ nav input::placeholder {
 }
 
 
-/* ---------- LOGIN ---------- */
+/* ---------- ICONS ---------- */
 #icon {
     position: relative;
     display: inline-block;
@@ -132,6 +132,7 @@ nav .login .btn {
     background-color: #AE9576;
     color: #fff;
     border: 2px solid #AE9576;
+    border-radius: 5px;
 }
 nav .login .btn:hover {
     background-color: #fff;

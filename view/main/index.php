@@ -35,26 +35,36 @@
             <div class="line"></div>
         </div>
         <div class="image-panel">
-            <figure>
-                <h4>Bagues</h4>
-                <a href="../boutique/catalogue.php?filtre_bague=on"><img src="../img/choice/bague.png" alt="image bague"></a>
-            </figure>    
-            <figure>
-                <h4>Boucles d'oreilles</h4>
-                <a href="../boutique/catalogue.php?filtre_earrings=on"><img src="../img/choice/boucles.png" alt="image boucles d'oreille"></a>
-            </figure>
-            <figure>
-                <h4>Bracelets</h4>
-                <a href="../boutique/catalogue.php?filtre_bracelet=on"><img src="../img/choice/bracelet.png" alt="image bracelet"></a>
-            </figure>
-            <figure>
-                <h4>Colliers</h4>
-                <a href="../boutique/catalogue.php?filtre_collier=on"><img src="../img/choice/collier.png" alt="image collier"></a>
-            </figure>     
-            <figure>
-                <h4>Collections</h4>
-                <a href="../boutique/catalogue.php?filtre_collection=on"><img src="../img/choice/collection.png" alt="image collection"></a>
-            </figure> 
+            <a href="../boutique/catalogue.php?filtre_bague=on">
+                <figure>
+                    <h4>Bagues</h4>
+                    <img src="../img/choice/bague.png" alt="image bague">
+                </figure>
+            </a>
+            <a href="../boutique/catalogue.php?filtre_earrings=on">
+                <figure>
+                    <h4>Boucles d'oreilles</h4>
+                    <img src="../img/choice/boucles.png" alt="image boucles d'oreille">
+                </figure>
+            </a>
+            <a href="../boutique/catalogue.php?filtre_bracelet=on">
+                <figure>
+                    <h4>Bracelets</h4>
+                    <img src="../img/choice/bracelet.png" alt="image bracelet">
+                </figure>
+            </a>
+            <a href="../boutique/catalogue.php?filtre_collier=on">
+                <figure>
+                    <h4>Colliers</h4>
+                    <img src="../img/choice/collier.png" alt="image collier">
+                </figure>  
+            </a>
+            <a href="../boutique/collection.php">
+                <figure>
+                    <h4>Collections</h4>
+                    <img src="../img/choice/collection.png" alt="image collection">
+                </figure>
+            </a>
         </div>
     </div>
 

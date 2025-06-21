@@ -255,16 +255,7 @@ if (isset($_POST['ajoutAdresse']) && !empty($_POST['pays']) && !empty($_POST['vi
             ?>
             <form action="profil.php" method="POST" class="profil-form">
 
-                <!-- PARTIE GAUCHE PROFILE -->
-                <div class="left-profile">
-                    <div class="image-profile">
-                        <img src="<?php echo !empty($vendeur['logo']) && file_exists('../img/profile/' . $vendeur['logo']) ? '../img/profile/' . $vendeur['logo'] : '../img/profile/default1.png'; ?>" alt="Logo d'entreprise">
-                        <input type="file" name="logo" id="fileInput" class="custom-file-input">
-                        <label for="fileInput" class="custom-file-label"><i class='bx bxs-pencil bx-sm'></i></label>
-                    </div>
-                </div>
-
-                <!-- PARTIE DROITE PROFILE -->
+                <!-- PROFILE -->
                 <div class="right-profile">
                     <div class="titre-group">
                         <h2>Mon profil</h2>
@@ -327,16 +318,7 @@ if (isset($_POST['ajoutAdresse']) && !empty($_POST['pays']) && !empty($_POST['vi
             ?>
             <form action="profil.php" method="POST" class="profil-form">
 
-                <!-- PARTIE GAUCHE PROFILE -->
-                <div class="left-profile">
-                    <div class="image-profile">
-                        <img src="<?php echo !empty($client['pdp']) && file_exists('../img/profile/' . $client['pdp']) ? '../img/profile/' . $client['pdp'] : '../img/profile/default1.png'; ?>" alt="Photo de profil">
-                        <input type="file" name="pdp" id="fileInput" class="custom-file-input">
-                        <label for="fileInput" class="custom-file-label"><i class='bx bxs-pencil bx-sm'></i></label>
-                    </div>
-                </div>
-
-                <!-- PARTIE DROITE PROFILE -->
+                <!-- PROFILE -->
                 <div class="right-profile">
                     <div class="titre-group">
                         <h2>Mon profil</h2>
@@ -519,7 +501,7 @@ if (isset($_POST['ajoutAdresse']) && !empty($_POST['pays']) && !empty($_POST['vi
                             <!-- <div class="produit-commande">
                                 <p id="message"><i class='bx bxs-error-circle bx-sm'></i> Un ou plusieurs articles de votre commande ont été supprimés (valeur: <?php echo $commande['prix_total'] - $calculPrixTotal; ?>€)</p>
                             </div>  
-                        <?php// } ?> -->
+                        // } ?> -->
                         
                     </div>
 

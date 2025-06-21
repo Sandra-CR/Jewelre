@@ -175,12 +175,13 @@ figure {
     position: relative;
     width: 16vw;
     transition: all 0.2s ease;
+    height: 100%;
 }
 figure:hover {
     transition: all 0.3s ease;
 }
-figure:nth-child(odd):hover { transform: scale(1.1) rotate(-1.5deg); }
-figure:nth-child(even):hover { transform: scale(1.1) rotate(1.5deg); }
+.image-panel a:nth-child(odd):hover { transform: scale(1.1) rotate(-1.5deg); }
+.image-panel a:nth-child(even):hover { transform: scale(1.1) rotate(1.5deg); }
 figure h4 {
     display: none;
     width: 100%;
@@ -196,6 +197,16 @@ figure:hover h4 {
     top: 50%;
     transform: translateY(-50%);
     text-align: center;
+}
+
+.choice-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+.choice-link figure {
+    cursor: pointer;
 }
 
 @media (min-width: 1400px) {

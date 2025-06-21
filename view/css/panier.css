@@ -1,5 +1,6 @@
 .panier {
     display: flex;
+    min-height: 85vh;
 }
 
 .panier-contenu {
@@ -23,6 +24,13 @@
 }
 #message i {
     margin: 0 8px;
+}
+#message a {
+    color: #AE9576;
+    font-weight: 500;
+}
+#message a:hover {
+    text-decoration: underline;
 }
 
 table {
@@ -113,6 +121,14 @@ input[type~="number"] {
     width: 20%;
     background-color: #fff;
 }
+.menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
 .prix-case {
     display: flex;
     flex-direction: column;
@@ -130,6 +146,21 @@ input[type~="number"] {
     font-weight: 700;
 }
 
+#panierForm {
+    text-align: center;
+}
+select {
+    width: 14vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 3px 0;
+    margin: 1vh 0;
+    border: 1.25px solid #AE9576;
+    border-radius: 3px;
+    color: #756249;
+    outline: none;
+}
 .menu-droite button {
     background-color: #AE9576;
     color: #fff;

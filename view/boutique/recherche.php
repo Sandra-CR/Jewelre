@@ -31,11 +31,12 @@ if(isset($_GET['query'])) {
          OR c.titre LIKE :query
          OR ps.matiere LIKE :query
          OR ps.couleur LIKE :query
-         OR ps.forme LIKE :query)
+         OR ps.forme LIKE :query
+         OR CONCAT_WS(' ', p.type_produit, p.matiere_p, p.couleur_p, p.motif, ps.matiere, ps.couleur) LIKE :query)
         AND p.en_vente = 1
         GROUP BY p.id ORDER BY RAND()
     ");
-    $stmt->execute(['query' => $_GET['query'] . '%']);
+    $stmt->execute(['query' => '%' . $_GET['query'] . '%']);
     $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
     header("Location: /Jewelre/view/main/index.php");
