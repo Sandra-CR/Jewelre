@@ -64,13 +64,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['modifier'])) {
                 exit();
             } else {
                 if (isset($_POST['envente'])) {
-                    $sql = "UPDATE collection SET en_vente = 1, titre = :titre, date_sortie = :date_sortie";
+                    $sql = "UPDATE collection SET en_vente = 1, titre = :titre, date_sortie = :date_sortie WHERE id = :id";
                 } else {
-                    $sql = "UPDATE collection SET en_vente = 0, titre = :titre, date_sortie = :date_sortie";
+                    $sql = "UPDATE collection SET en_vente = 0, titre = :titre, date_sortie = :date_sortie WHERE id = :id";
                 }
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':titre', $titre);
                 $stmt->bindParam(':date_sortie', $date_sortie);
+                $stmt->bindParam(':id', $idCollection);
                 $stmt->execute();
 
                 foreach ($produitsDecoches as $id) {
@@ -186,9 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['modifier'])) {
                                             <label for="produitItem"><a href="../boutique/produit_page.php?id=<?php echo htmlspecialchars($produit['id']); ?>&taille=<?php echo htmlspecialchars($premiereTaille['id']); ?>"><?php echo $produit['type_produit'] . " " . $produit['motif'] . " " . $produit['matiere_p'] . " " . $produit['couleur_p'] . " " . $pierresInfo; ?></a></label>
                                         </div>
 
-                                        <input type="checkbox" name="produitItem[]" value="<?php echo $produit['id']; ?>" <?php if ($produit['id_collection'] == $idCollection) {
-                                                                                                                                echo "checked";
-                                                                                                                            } ?>>
+                                        <input type="checkbox" name="produitItem[]" value="<?php echo $produit['id']; ?>" <?php if ($produit['id_collection'] == $idCollection) {echo "checked";} ?>>
                                     </div>
                                 <?php } ?>
                             </div>

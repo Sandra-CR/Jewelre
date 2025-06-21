@@ -116,10 +116,12 @@ if(isset($_POST['modifierArticle'])) {
         $modifProduitTaille = 0;
         if ($produit['type_produit'] === "Bague") {
             if (!empty($_POST['quantite']) && !empty($_POST['poids']) && !empty($_POST['tour_doigt'])) {
-                $stmt = $conn->prepare("UPDATE produit_taille SET quantite = :quantite, poids = :poids, tour_doigt = :tour_doigt");
+                $stmt = $conn->prepare("UPDATE produit_taille SET quantite = :quantite, poids = :poids, tour_doigt = :tour_doigt WHERE id = :id AND id_produit = :id_produit");
                 $stmt->bindParam(':quantite', $_POST['quantite']);
                 $stmt->bindParam(':poids', $_POST['poids']);
                 $stmt->bindParam(':tour_doigt', $_POST['tour_doigt']);
+                $stmt->bindParam(':id', $idTailleActive);
+                $stmt->bindParam(':id_produit', $idProduit);
                 $stmt->execute();
                 $modifProduitTaille = $stmt->rowCount();
             } else {
@@ -127,11 +129,13 @@ if(isset($_POST['modifierArticle'])) {
             }
         } else {
             if (!empty($_POST['quantite']) && !empty($_POST['poids']) && !empty($_POST['longueur']) && !empty($_POST['largeur'])) {
-                $stmt = $conn->prepare("UPDATE produit_taille SET quantite = :quantite, poids = :poids, longueur = :longueur, largeur = :largeur");
+                $stmt = $conn->prepare("UPDATE produit_taille SET quantite = :quantite, poids = :poids, longueur = :longueur, largeur = :largeur WHERE id = :id AND id_produit = :id_produit");
                 $stmt->bindParam(':quantite', $_POST['quantite']);
                 $stmt->bindParam(':poids', $_POST['poids']);
                 $stmt->bindParam(':longueur', $_POST['longueur']);
                 $stmt->bindParam(':largeur', $_POST['largeur']);
+                $stmt->bindParam(':id', $idTailleActive);
+                $stmt->bindParam(':id_produit', $idProduit);
                 $stmt->execute();
                 $modifProduitTaille = $stmt->rowCount();
             } else {

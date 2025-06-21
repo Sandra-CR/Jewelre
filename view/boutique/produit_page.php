@@ -190,7 +190,7 @@ $produit = $stmt->fetch();
         </div>
     </div>
 
-    <div class="produit-desc">
+    <div class="produit-desc vente">
         <div class="desc-group">
             <h2>Détail produit</h2>
             <div class="donnee-group"><h5>Genre</h5> <p><?php echo $produit['genre']; ?></p></div>
@@ -248,7 +248,7 @@ $produit = $stmt->fetch();
 
     <div class="avis-container" id="avis">
         <?php 
-        $stmt = $conn->prepare("SELECT cm.*, c.pseudo, c.pdp FROM commentaire cm LEFT JOIN client c ON c.id = cm.id_client WHERE cm.id_produit = :id_produit ORDER BY cm.date_publication DESC");
+        $stmt = $conn->prepare("SELECT cm.*, c.pseudo FROM commentaire cm LEFT JOIN client c ON c.id = cm.id_client WHERE cm.id_produit = :id_produit ORDER BY cm.date_publication DESC");
         $stmt->bindParam(':id_produit', $idProduit);
         $stmt->execute();
         $commentaires = $stmt->fetchAll(PDO::FETCH_ASSOC);

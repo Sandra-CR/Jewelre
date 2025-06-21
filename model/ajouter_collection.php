@@ -37,13 +37,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $validExtensions = ['png', 'jpg', 'jpeg', 'webp', 'avif'];
                         if (in_array(strtolower($imageExtension), $validExtensions)) {
                             $newImageName = uniqid('', true) . '.' . $imageExtension;
-                            $uploadDir = '/Jewelre/view/img/collection/';
+                            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/Jewelre/view/img/collection/';
                             if (!is_dir($uploadDir)) {
                                 mkdir($uploadDir, 0777, true);
                             }
                             $imageDestination = $uploadDir . $newImageName;
                             move_uploaded_file($imageTmpName, $imageDestination);
-                            $image_chemin = $imageDestination;
+                            $image_chemin = '/Jewelre/view/img/collection/' . $newImageName;
                         } else {
                             $_SESSION['erreur'] = '<span>Extension de fichier non autorisée.</span>';
                             header("Location: add_collection.php");

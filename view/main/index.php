@@ -17,7 +17,7 @@
     <div class="slider">
         <div class="slides">
             <!-- <a href=""><img class="slide" src="../img/carousel/slider2.png" alt="img1"></a> -->
-            <a href=""><img class="slide" src="../img/carousel/slider1.png" alt="img1"></a>
+            <a href="http://localhost/Jewelre/view/boutique/collection_page.php?id=3"><img class="slide" src="../img/carousel/slider1.png" alt="img1"></a>
             <a href=""><img class="slide" src="../img/carousel/slider2.png" alt="img2"></a>
         </div>
         <button class="prev" onclick="plusSlides(-1)"><i class='bx bx-chevron-left bx-lg'></i></button>

@@ -258,6 +258,7 @@ h3 {
     justify-content: space-around;
     padding: 4% 3% 1.5%;
 }
+.produit-desc.vente { background-color: #fff; }
 
 /* -- Description group ----------------------- */
 .desc-group {
