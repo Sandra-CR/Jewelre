@@ -477,6 +477,67 @@ if(isset($_POST['modifierArticle'])) {
             <button type="submit" name="modifierArticle" id="modifBtn">Appliquer les modifications</button>
         </div>
     </form>
+
+
+    <div class="avis-container" id="avis">
+        <?php 
+        $stmt = $conn->prepare("SELECT cm.*, c.pseudo FROM commentaire cm LEFT JOIN client c ON c.id = cm.id_client WHERE cm.id_produit = :id_produit ORDER BY cm.date_publication DESC");
+        $stmt->bindParam(':id_produit', $idProduit);
+        $stmt->execute();
+        $commentaires = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <h2>Commentaires vérifiés (<?php echo count($commentaires); ?>)</h2>
+        <div class="grid">
+            <?php 
+            foreach($commentaires as $commentaire) { 
+                list($dateEn, $heureFull) = explode(" ", $commentaire['date_publication']);
+                $dateFr = DateTime::createFromFormat('Y-m-d', $dateEn)->format('d/m/Y');
+                $heureFormat = date("H:i", strtotime($heureFull));
+                ?>
+                <div class="avis-item">
+                    <div class="avis-info">
+                        <div class="left">
+                            <img src="<?php echo !empty($commentaire['pdp']) && file_exists('../img/profile/' . $vendeur['pdp']) ? '../img/profile/' . $commentaire['pdp'] : '../img/profile/default1.png'; ?>" alt="Photo de profil de <?php echo $commentaire['pseudo']; ?>">
+                            <h4><?php echo $commentaire['pseudo']; ?></h4>
+                        </div>
+                        <div class="right">
+                            <p id="datePost">Publié le <?php echo $dateFr ." à ". $heureFormat ?></p>
+                        </div>
+                    </div>
+                    <div class="avis-content">
+                        <div class="titre">
+                            <div class="etoiles">
+                                <?php  
+                                switch ($commentaire['note']) {
+                                    case 1:
+                                        echo "<i class='bx bxs-star'></i><i class='bx bx-star'></i><i class='bx bx-star'></i><i class='bx bx-star'></i><i class='bx bx-star'></i>";
+                                        break;
+                                    case 2:
+                                        echo "<i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bx-star'></i><i class='bx bx-star'></i><i class='bx bx-star'></i>";
+                                        break;
+                                    case 3:
+                                        echo "<i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bx-star'></i><i class='bx bx-star'></i>";
+                                        break;
+                                    case 4:
+                                        echo "<i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bx-star'></i>";
+                                        break;
+                                    case 5:
+                                        echo "<i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i>";
+                                        break;
+                                }
+                                ?>
+                            </div>
+                            <h5><?php echo $commentaire['titre']; ?></h3>
+                        </div>
+                        <p><?php echo $commentaire['description']; ?></p>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+
     <?php 
     } else { ?>
         <div class="article-introuvable">

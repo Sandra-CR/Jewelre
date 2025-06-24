@@ -71,8 +71,6 @@ if(isset($_SESSION['pseudo'])) {
         <div class="login">
             <?php
             if(isset($_SESSION['admin'])) {
-                echo '<a href="#"><i class=\'bx bx-message-alt-minus bx-sm\'></i></a>';
-                echo '<a href="#"><i class=\'bx bx-plus bx-sm\'></i></a>';
                 echo '<a href="/Jewelre/view/main/profil.php">' . $_SESSION['admin'] . '</a>';
                 echo '<a href="/Jewelre/model/logout.php" class="btn"><i class=\'bx bx-log-out bx-sm\'></i></a>';
             } elseif(isset($_SESSION['entreprise'])){
@@ -99,11 +97,11 @@ if(isset($_SESSION['pseudo'])) {
         <ul>
             <?php
             if(isset($_SESSION['admin'])) {
-                echo "<li><a href=\"/Jewelre/view/admin/admin_dashboard.php\">DASHBOARD</a></li>";
+                echo "<li><a href=\"/Jewelre/view/admin/admin_dashboard.php\">VOIR TOUT</a></li>";
                 echo "<li><a href=\"/Jewelre/view/admin/admin_utilisateurs.php\">UTILISATEURS</a></li>";
                 echo "<li><a href=\"/Jewelre/view/admin/admin_produits.php\">PRODUITS</a></li>";
             } else if(isset($_SESSION['entreprise'])) {
-                echo "<li><a href=\"/Jewelre/view/vendeur/dashboard.php\">DASHBOARD</a></li>";
+                // echo "<li><a href=\"/Jewelre/view/vendeur/dashboard.php\">DASHBOARD</a></li>";
                 echo "<li><a href=\"/Jewelre/view/vendeur/add_bague.php\">AJOUTER UN ARTICLE</a></li>";
                 echo "<li><a href=\"/Jewelre/view/vendeur/inventaire.php\">MES ARTICLES</a></li>";
                 echo "<li><a href=\"/Jewelre/view/vendeur/inventaire_collection.php\">MES COLLECTIONS</a></li>";

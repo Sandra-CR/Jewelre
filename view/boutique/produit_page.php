@@ -10,9 +10,10 @@ try {
     exit();
 }
 
+$id_produit = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$id_taille = filter_input(INPUT_GET, 'taille', FILTER_VALIDATE_INT);
+
 if(isset($_POST['ajouterAuPanier'])) {
-    $id_produit = $_GET['id'];
-    $id_taille = $_GET['taille'];
     if(!isset($_SESSION['panier'])) {
         $_SESSION['panier'] = [];
     }
@@ -21,13 +22,12 @@ if(isset($_POST['ajouterAuPanier'])) {
 }
 
 if(isset($_SESSION['pseudo'])){
-    $id_produit = (int) $_GET['id'];
     $id_client = (int) $_SESSION['id'];
-
     if(isset($_POST['ajouterAuxFavoris'])) {
         $_SESSION['temp_id_produit'] = $_GET['id'];
     }
 }
+
 $idProduit = $_GET['id'];
 $idTailleActive = $_GET['taille'];
 $stmt = $conn->prepare("SELECT p.id, p.type_produit, p.motif, p.matiere_p, p.couleur_p, p.matiere_s, p.couleur_s, p.prix, p.id_fournisseur,
@@ -41,6 +41,43 @@ WHERE p.en_vente = 1 AND p.id = :id;");
 $stmt->bindParam(':id', $idProduit, PDO::PARAM_INT);
 $stmt->execute();
 $produit = $stmt->fetch();
+
+
+// Ajouter un commentaire
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $rating = intval($_POST['rating']);
+    $titre = trim($_POST['titre']);
+    $description = trim($_POST['description']);
+    $idClient = $_SESSION['id'];
+
+    if ($rating < 1 || $rating > 5) {
+        $_SESSION['erreur'] = "Note invalide";
+        header("Location: produit_page.php?id=" . $id_produit . "&taille=" . $id_taille);
+        exit;
+    }
+    if (empty($titre) || empty($description)) {
+        $_SESSION['erreur'] = "Veuillez remplir tous les champs pour ajouter le commentaire";
+        header("Location: produit_page.php?id=" . $id_produit . "&taille=" . $id_taille);
+        exit;
+    }
+
+    $stmt = $conn->prepare("INSERT INTO commentaire (note, titre, description, date_publication, id_client, id_produit) VALUES (:note, :titre, :description, NOW(), :id_client, :id_produit)");
+    $stmt->bindParam(':note', $rating);
+    $stmt->bindParam(':titre', $titre);
+    $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':id_client', $idClient);
+    $stmt->bindParam(':id_produit', $idProduit);
+    $result = $stmt->execute();
+    if ($result) {
+        $_SESSION['message'] = "Votre commentaire a ete ajouté avec succès";
+        header("Location: produit_page.php?id=" . $id_produit . "&taille=" . $id_taille);
+        exit;
+    } else {
+        $_SESSION['erreur'] = "Une erreur s'est produite lors de l'ajout du commentaire";
+        header("Location: produit_page.php?id=" . $id_produit . "&taille=" . $id_taille);
+        exit;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +107,17 @@ $produit = $stmt->fetch();
     <div class="retour">
         <button onclick="history.back();" id="btnRetour">< Retour</button>
     </div>
+    <?php
+        if (isset($_SESSION['message'])) {
+            echo '<p id="message"><i class=\'bx bxs-check-circle bx-sm\'></i>' . $_SESSION['message'] . '</p>';
+            unset($_SESSION['message']);
+        }
+        if (isset($_SESSION['erreur'])) {
+            echo '<p id="erreur"><i class=\'bx bxs-error-circle bx-sm\'></i>' . $_SESSION['erreur'] . '</p>';
+            unset($_SESSION['erreur']);
+        }
+    ?>
+
     <div class="produit">
         <div class="images-produit">
             <div class="slider">
@@ -259,10 +307,11 @@ $produit = $stmt->fetch();
             <?php 
             if(isset($_SESSION['pseudo'])) {
                 $idClient = $_SESSION['id'];
-                $stmt = $conn->prepare("SELECT * FROM commentaire WHERE id_client = :id_client");
+                $stmt = $conn->prepare("SELECT * FROM commentaire WHERE id_client = :id_client AND id_produit = :id_produit");
                 $stmt->bindParam(':id_client', $idClient);
+                $stmt->bindParam(':id_produit', $idProduit);
                 $stmt->execute();
-                $aCommentaire = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $aCommentaire = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 $stmt = $conn->prepare("SELECT * FROM commande_contenu cc LEFT JOIN commande c ON c.id = cc.id_commande WHERE c.id_client = :id_client AND cc.id_produit = :id_produit");
                 $stmt->bindParam(':id_client', $idClient);
@@ -270,16 +319,22 @@ $produit = $stmt->fetch();
                 $stmt->execute();
                 $aCommande = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                if(count($aCommentaire) == 0 && count($aCommande) != 0) { ?>
+                if($aCommentaire == 0 && count($aCommande) != 0) { ?>
                     <div class="avis-item add">
-                        <form method="POST">
+                        <form method="POST" name="posterCommentaire">
+                            <div class="star-rating">
+                                <input type="hidden" name="rating" id="rating-value">
+                                <span class="star" data-value="1">&#9733;</span>
+                                <span class="star" data-value="2">&#9733;</span>
+                                <span class="star" data-value="3">&#9733;</span>
+                                <span class="star" data-value="4">&#9733;</span>
+                                <span class="star" data-value="5">&#9733;</span>
+                            </div>
                             <input type="text" name="titre">
-                            <textarea name="description"></textarea>
+                            <textarea name="description" rows="4"></textarea>
                             <button tyepe="submit">Publier mon avis</button>
                         </form>
-                    </div>                    
-
-
+                    </div>           
                 <?php } 
             }
             foreach($commentaires as $commentaire) { 
@@ -409,6 +464,38 @@ $produit = $stmt->fetch();
         }
     });
 
+
+
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('rating-value');
+    let selectedRating = 0;
+
+    stars.forEach(star => {
+        // Survol
+        star.addEventListener('mouseover', () => {
+        const val = parseInt(star.dataset.value);
+        highlightStars(val);
+        });
+
+        // Fin du survol
+        star.addEventListener('mouseout', () => {
+        highlightStars(selectedRating);
+        });
+
+        // Clic
+        star.addEventListener('click', () => {
+        selectedRating = parseInt(star.dataset.value);
+        ratingInput.value = selectedRating;
+        highlightStars(selectedRating);
+        });
+    });
+
+    function highlightStars(rating) {
+        stars.forEach(star => {
+        const val = parseInt(star.dataset.value);
+        star.classList.toggle('selected', val <= rating);
+        });
+    }
     </script>
 
 </body>

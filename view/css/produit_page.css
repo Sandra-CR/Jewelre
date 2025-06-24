@@ -336,6 +336,55 @@ input, select {
 }
 
 
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* ----- COMMENTAIRES ---------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+
+.avis-item.add {
+    border: none;
+}
+.avis-item.add form {
+    gap: 10px;
+    text-align: center;
+}
+
+.star-rating .star {
+  font-size: 32px;
+  color: #cfccc5;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.star-rating .star.hover,
+.star-rating .star.selected {
+  color: #AE9576;
+}
+
+.avis-item.add input,
+.avis-item.add textarea {
+    padding: 7px;
+    font-size: 16px;
+    color: #756249;
+    border: 1px solid #756249;
+    outline: none;
+    resize: none;
+    border-radius: 5px;
+}
+.avis-item.add button {
+    color: #fff;
+    background-color: #AE9576;
+    border: 2px solid #AE9576;
+    width: fit-content;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    display: block;
+    margin-left: auto;
+}
+
+
 /* ---------------------------------------------------------------------------------------------- */
 /* ----- SPE VENDEUR ---------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------------- */
@@ -473,6 +522,7 @@ input, select {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-items: center;
+    align-items: center;
     gap: 20px 30px;
 }
 .avis-container .grid > div:nth-child(odd):last-child {
@@ -485,6 +535,7 @@ input, select {
     padding: 15px;
     border-radius: 35px 5px 5px;
     min-width: 40vw;
+    height: fit-content;
 }
 
 .avis-info {

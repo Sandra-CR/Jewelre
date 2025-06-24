@@ -18,7 +18,7 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@ try {
     <link rel="stylesheet" href="../css/style.css">
     <link rel="shortcut icon" href="../img/logo-site.png">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Dashboard | Jewelr-e</title>
+    <title>Ensemble des tableaux | Jewelr-e</title>
 </head>
 <body>
 <?php include ('../include/navbar.php') ?>
@@ -81,7 +81,6 @@ try {
             } else {
                 echo "<p>Aucune donnée disponible</p>"; 
             }
-            echo "<p><a href='create.php?table=$tableName' class='add'>Ajouter un $tableName</a></p>";
         }
     } else {
         echo "<p>Aucune table trouvée dans la base de données</p>";

@@ -92,7 +92,6 @@ try {
             } else {
                 echo "<p>Aucune donnée disponible</p>"; 
             }
-            echo "<p><a href='create.php?table=$tableName' class='add'>Ajouter des données</a></p>";
         }
     } else {
         echo "<p>Aucune table trouvée dans la base de données</p>";

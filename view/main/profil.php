@@ -495,14 +495,7 @@ if (isset($_POST['ajoutAdresse']) && !empty($_POST['pays']) && !empty($_POST['vi
                                     <p id="prixProduit"><?php echo $contenu['prix_achat'] . "€"; ?></p>
                                 <?php } ?>
                             </div>
-                        <?php } 
-
-                        // if($commande['prix_total'] > $calculPrixTotal) { ?>
-                            <!-- <div class="produit-commande">
-                                <p id="message"><i class='bx bxs-error-circle bx-sm'></i> Un ou plusieurs articles de votre commande ont été supprimés (valeur: <?php echo $commande['prix_total'] - $calculPrixTotal; ?>€)</p>
-                            </div>  
-                        // } ?> -->
-                        
+                        <?php } ?>
                     </div>
 
                 <?php 

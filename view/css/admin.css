@@ -23,21 +23,25 @@ th {
     font-size: 0.9rem;
     color: #fff;
     background-color: #AE9576;
-    border: 1px solid #756249;
+    /* border: 1px solid #756249; */
     padding: 1vh 1vw;
 }
 tr {
     font-size: 0.8rem;
-    color: #756249;
+    color: #000;
     transition: all 0.3s ease;
+    text-align: center;
+}
+tr:nth-child(odd){
+    background-color: #f1f1f1;
 }
 tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f8f8f8;
     transition: all 0.3s ease;
 }
 
 td {
-    border: 1px solid #AE9576;
+    /* border: 1px solid #AE9576; */
     padding: 1.2vh 0.5vw;
 }
 
